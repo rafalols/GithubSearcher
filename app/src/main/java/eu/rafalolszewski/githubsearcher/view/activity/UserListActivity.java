@@ -12,7 +12,7 @@ import eu.rafalolszewski.githubsearcher.view.fragment.UserListView;
 
 public class UserListActivity extends AppCompatActivity {
 
-    UserListActivityComponent component;
+    public UserListActivityComponent component;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -5,4 +5,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_search_history">Search history</string>
+    <string name="endpoint">https://api.github.com</string>
+    <string name="cant_search_empty">Can\'t search for empty name</string>
+    <string name="wait_for_api">Please wait for API</string>
 </resources>

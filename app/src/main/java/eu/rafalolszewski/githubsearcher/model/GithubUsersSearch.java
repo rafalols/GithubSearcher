@@ -10,21 +10,21 @@ import java.util.List;
 public class GithubUsersSearch {
 
     @SerializedName("total_count")
-    int count;
+    public int count;
 
     @SerializedName("items")
-    List<UserPreview> usersPreviews;
+    public List<UserPreview> usersPreviews;
 
     public class UserPreview{
 
-        int id;
+        public int id;
 
-        String login;
+        public String login;
 
         @SerializedName("avatar_url")
-        String avatarUrl;
+        public String avatarUrl;
 
-        String type;
+        public String type;
     }
 
 }

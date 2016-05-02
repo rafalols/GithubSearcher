@@ -7,34 +7,34 @@ import com.google.gson.annotations.SerializedName;
  */
 public class GithubUser {
 
-    int id;
+    public int id;
 
-    String login;
+    public String login;
 
     @SerializedName("avatar_url")
-    String avatarUrl;
+    public String avatarUrl;
 
     @SerializedName("html_url")
-    String htmlUrl;
+    public String htmlUrl;
 
-    String name;
+    public String name;
 
-    String company;
+    public String company;
 
-    String location;
+    public String location;
 
-    String email;
+    public String email;
 
     @SerializedName("public_repos")
-    int publicRepos;
+    public int publicRepos;
 
     @SerializedName("public_gists")
-    int publicGists;
+    public int publicGists;
 
-    int followers;
+    public int followers;
 
-    int following;
+    public int following;
 
-    String type;
+    public String type;
 
 }

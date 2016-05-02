@@ -6,17 +6,34 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.model.SearchHistory;
+import eu.rafalolszewski.githubsearcher.view.presenter.SearchPresenter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SearchFragment extends Fragment implements SearchView {
 
+    @Bind(R.id.edittext_searcher)
+    EditText searchText;
+
+    @OnClick(R.id.button_search)
+    public void search(){
+        presenter.search(searchText.getText().toString());
+    }
+
+    @Inject
+    SearchPresenter presenter;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -27,11 +44,20 @@ public class SearchFragment extends Fragment implements SearchView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
+
+        ButterKnife.bind(this, view);
+
+        return view;
     }
 
     @Override
     public void refreshHistory(List<SearchHistory> searchHistory) {
 
+    }
+
+    @Override
+    public void initViewToPresenter() {
+        presenter.setView(this);
     }
 }

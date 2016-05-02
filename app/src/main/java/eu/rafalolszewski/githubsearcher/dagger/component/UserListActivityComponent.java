@@ -3,6 +3,7 @@ package eu.rafalolszewski.githubsearcher.dagger.component;
 import dagger.Component;
 import eu.rafalolszewski.githubsearcher.dagger.module.UserListActivityModule;
 import eu.rafalolszewski.githubsearcher.dagger.scope.PerUserListActivity;
+import eu.rafalolszewski.githubsearcher.view.activity.UserListActivity;
 import eu.rafalolszewski.githubsearcher.view.fragment.UserListFragment;
 import eu.rafalolszewski.githubsearcher.view.presenter.UserListPresenter;
 
@@ -16,5 +17,7 @@ public interface UserListActivityComponent {
     UserListPresenter userListPresenter();
 
     void inject(UserListFragment userListFragment);
+
+    void inject(UserListActivity userListActivity);
 
 }

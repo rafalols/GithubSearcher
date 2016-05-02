@@ -1,15 +1,16 @@
 package eu.rafalolszewski.githubsearcher.view.fragment;
 
-import java.util.List;
-
 import eu.rafalolszewski.githubsearcher.model.GithubUser;
+import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
 
 /**
  * Created by rafal on 02.05.16.
  */
-public interface UserListView {
+public interface UserListView extends BaseView {
 
-    public void refreshUsers(List<GithubUser> listOfUsers);
+    public void onGetUsersList(GithubUsersSearch usersList);
+
+    public void onRefreshUser(GithubUser user);
 
     public void setProgressIndicator(boolean enabled);
 

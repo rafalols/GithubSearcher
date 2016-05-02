@@ -5,6 +5,8 @@ package eu.rafalolszewski.githubsearcher.view.presenter;
  */
 public interface SearchPresenter extends BasePresenter {
 
+    public static final String SEARCH_STRING= "searchString";
+
     public void search(String search);
 
 }

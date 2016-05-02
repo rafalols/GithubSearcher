@@ -12,9 +12,9 @@
             style="@style/label"/>
 
         <EditText
+            android:id="@+id/edittext_searcher"
             android:layout_below="@+id/label_searcher"
             android:layout_toLeftOf="@+id/button_search"
-            android:id="@+id/edittext_searcher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />

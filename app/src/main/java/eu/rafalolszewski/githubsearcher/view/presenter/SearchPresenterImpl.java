@@ -1,8 +1,13 @@
 package eu.rafalolszewski.githubsearcher.view.presenter;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.view.activity.SearchActivity;
+import eu.rafalolszewski.githubsearcher.view.activity.UserListActivity;
+import eu.rafalolszewski.githubsearcher.view.fragment.BaseView;
 import eu.rafalolszewski.githubsearcher.view.fragment.SearchView;
 
 /**
@@ -10,17 +15,25 @@ import eu.rafalolszewski.githubsearcher.view.fragment.SearchView;
  */
 public class SearchPresenterImpl implements SearchPresenter {
 
-    SearchActivity searchActivity;
+    SearchActivity activity;
     SearchView searchView;
 
     public SearchPresenterImpl(SearchActivity searchActivity, SearchView searchView) {
-        this.searchActivity = searchActivity;
+        this.activity = searchActivity;
         this.searchView = searchView;
     }
 
     @Override
-    public void search(String search) {
-
+    public void search(String searchString) {
+        if (searchString.isEmpty()){
+            Toast.makeText(activity, activity.getString(R.string.cant_search_empty), Toast.LENGTH_LONG).show();
+        }else if (activity.getApi() == null){
+            Toast.makeText(activity, activity.getString(R.string.wait_for_api), Toast.LENGTH_LONG).show();
+        }else {
+            Intent intent = new Intent(activity, UserListActivity.class);
+            intent.putExtra(SEARCH_STRING, searchString);
+            activity.startActivity(intent);
+        }
     }
 
     @Override
@@ -36,5 +49,10 @@ public class SearchPresenterImpl implements SearchPresenter {
     @Override
     public void onStop() {
 
+    }
+
+    @Override
+    public void setView(BaseView view) {
+        searchView = (SearchView) view;
     }
 }

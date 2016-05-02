@@ -7,7 +7,7 @@ import eu.rafalolszewski.githubsearcher.model.SearchHistory;
 /**
  * Created by rafal on 02.05.16.
  */
-public interface SearchView {
+public interface SearchView extends BaseView{
 
     public void refreshHistory(List<SearchHistory> searchHistory);
 

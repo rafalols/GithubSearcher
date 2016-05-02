@@ -1,6 +1,7 @@
 package eu.rafalolszewski.githubsearcher.view.presenter;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import eu.rafalolszewski.githubsearcher.R;
@@ -12,12 +13,16 @@ import eu.rafalolszewski.githubsearcher.view.fragment.BaseView;
 import eu.rafalolszewski.githubsearcher.view.fragment.UserListView;
 import rx.Observable;
 import rx.Scheduler;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by rafal on 02.05.16.
  */
 public class UserListPresenterImpl implements UserListPresenter {
 
+    private static final String TAG = "UserListPresenterImpl";
     UserListActivity activity;
     UserListView userListView;
 
@@ -37,7 +42,23 @@ public class UserListPresenterImpl implements UserListPresenter {
         }else{
             userListView.setProgressIndicator(true);
             gitHubApi.searchForUsers(searchString)
-                    .subscribe(usersSearch -> onGetUsersList(usersSearch));
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<GithubUsersSearch>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e(TAG, "onError: ", e);
+                        }
+
+                        @Override
+                        public void onNext(GithubUsersSearch githubUsersSearch) {
+                            onGetUsersList(githubUsersSearch);
+                        }
+                    });
         }
     }
 
@@ -49,6 +70,7 @@ public class UserListPresenterImpl implements UserListPresenter {
 
     private void searchForUsersDetails(GithubUsersSearch usersSearch) {
         Observable.from(usersSearch.usersPreviews)
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .map(user -> user.login)
                 .flatMap(login -> gitHubApi.getUser(login))
                 .subscribe(user -> onGetUserDetails(user));

@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import dagger.producers.ProducerModule;
 import dagger.producers.Produces;
 import eu.rafalolszewski.githubsearcher.GitHubSearcherApplication;
+import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.api.GitApiService;
 import eu.rafalolszewski.githubsearcher.api.GitHubApi;
 import okhttp3.OkHttpClient;
@@ -30,7 +31,7 @@ public class ApiModule {
     public Retrofit produceRetrofit(GitHubSearcherApplication application, OkHttpClient okHttpClient) {
         Retrofit.Builder builder = new Retrofit.Builder();
         builder.client(okHttpClient)
-                .baseUrl("https://api.github.com")
+                .baseUrl(application.getString(R.string.endpoint))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create());
         return builder.build();

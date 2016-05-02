@@ -7,14 +7,13 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".view.activity.SearchActivity">
+    tools:context=".view.activity.UserListActivity">
 
     <fragment
-        android:id="@+id/search_fragment"
-        android:name="eu.rafalolszewski.githubsearcher.view.fragment.SearchFragment"
+        android:id="@+id/user_list_fragment"
+        android:name="eu.rafalolszewski.githubsearcher.view.fragment.UserListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_search" />
-
+        tools:layout="@layout/fragment_user_list" />
 
 </RelativeLayout>

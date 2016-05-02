@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/activity_search"
+    tools:context="eu.rafalolszewski.githubsearcher.view.fragment.SearchFragment">
+
+    <include layout="@layout/searcher" />
+
+
+    <TextView
+        android:id="@+id/label_history"
+        android:text="@string/label_search_history"
+        style="@style/label" />
+
+
+    <ListView
+        android:id="@+id/list_search_history"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

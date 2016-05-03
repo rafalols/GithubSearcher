@@ -8,4 +8,5 @@
     <string name="endpoint">https://api.github.com</string>
     <string name="cant_search_empty">Can\'t search for empty name</string>
     <string name="wait_for_api">Please wait for API</string>
+    <string name="Users">Users:</string>
 </resources>

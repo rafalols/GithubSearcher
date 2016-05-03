@@ -1,9 +1,17 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="eu.rafalolszewski.githubsearcher.view.fragment.UserListFragment"
     tools:showIn="@layout/activity_user_list">
+
+
+    <TextView
+        android:id="@+id/label_users"
+        android:text="@string/Users"
+        style="@style/label"/>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_user_list"
@@ -11,4 +19,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-</FrameLayout>
+</LinearLayout>

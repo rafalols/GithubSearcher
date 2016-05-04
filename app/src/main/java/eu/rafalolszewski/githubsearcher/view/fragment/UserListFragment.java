@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import eu.rafalolszewski.githubsearcher.R;
-import eu.rafalolszewski.githubsearcher.model.GithubUser;
 import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
 import eu.rafalolszewski.githubsearcher.view.adapter.UserListAdapter;
 import eu.rafalolszewski.githubsearcher.view.presenter.UserListPresenter;
@@ -33,8 +31,11 @@ public class UserListFragment extends Fragment implements UserListView{
 
     @Bind(R.id.recycler_user_list)
     RecyclerView recyclerView;
-    RecyclerView.Adapter rwAdapter;
+
     RecyclerView.LayoutManager rwLayoutManager;
+
+    @Inject
+    UserListAdapter rwAdapter;
 
     @Inject
     UserListPresenter presenter;
@@ -54,40 +55,32 @@ public class UserListFragment extends Fragment implements UserListView{
 
         ButterKnife.bind(this, view);
 
-        setupRecyclerView();
-
         return view;
     }
 
     private void setupRecyclerView() {
         rwLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(rwLayoutManager);
-
-        rwAdapter = new UserListAdapter();
         recyclerView.setAdapter(rwAdapter);
     }
 
-
     @Override
     public void onGetUsersList(GithubUsersSearch usersList) {
-        usersLabel.setText(getActivity().getString(R.string.Users) + " found " + usersList.count);
-
-    }
-
-    @Override
-    public void onRefreshUser(GithubUser user) {
-        Log.i(TAG, "onRefreshUser:  name" + user.name
-                + ", email " + user.email
-                + ", company " + user.company
-                + ", type " + user.type
-                + ", fallowers " + user.followers
-                + ", repos " + user.publicRepos
-                + ", htmlUrl " + user.htmlUrl);
+        usersLabel.setText(getString(R.string.Users) + " found " + usersList.count);
+        synchronized (rwAdapter) {
+            rwAdapter.setUsersList(usersList);
+            rwAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void setProgressIndicator(boolean enabled) {
 
+    }
+
+    @Override
+    public void onInjectDependencies() {
+        setupRecyclerView();
     }
 
     @Override

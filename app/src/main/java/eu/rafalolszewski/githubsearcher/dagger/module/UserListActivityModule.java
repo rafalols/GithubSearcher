@@ -4,6 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 import eu.rafalolszewski.githubsearcher.dagger.scope.PerUserListActivity;
 import eu.rafalolszewski.githubsearcher.view.activity.UserListActivity;
+import eu.rafalolszewski.githubsearcher.view.adapter.UserListAdapter;
 import eu.rafalolszewski.githubsearcher.view.fragment.UserListView;
 import eu.rafalolszewski.githubsearcher.view.presenter.UserListPresenter;
 import eu.rafalolszewski.githubsearcher.view.presenter.UserListPresenterImpl;
@@ -27,4 +28,11 @@ public class UserListActivityModule {
     UserListPresenter providesUserListPresenter(){
         return new UserListPresenterImpl(userListActivity, userListView);
     }
+
+    @Provides
+    @PerUserListActivity
+    UserListAdapter providesUserListAdapter(UserListPresenter presenter){
+        return new UserListAdapter(userListActivity, presenter);
+    }
+
 }

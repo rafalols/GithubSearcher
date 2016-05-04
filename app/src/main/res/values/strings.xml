@@ -9,4 +9,9 @@
     <string name="cant_search_empty">Can\'t search for empty name</string>
     <string name="wait_for_api">Please wait for API</string>
     <string name="Users">Users:</string>
+    <string name="label_user_name">Name</string>
+    <string name="label_user_fallowers">Fallowers</string>
+    <string name="label_user_repos">Repositories</string>
+    <string name="api_error">Can\'t connect to GitHub</string>
+    <string name="label_user_email">Email</string>
 </resources>

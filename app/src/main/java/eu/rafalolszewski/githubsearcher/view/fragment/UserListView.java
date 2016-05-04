@@ -1,6 +1,5 @@
 package eu.rafalolszewski.githubsearcher.view.fragment;
 
-import eu.rafalolszewski.githubsearcher.model.GithubUser;
 import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
 
 /**
@@ -10,9 +9,9 @@ public interface UserListView extends BaseView {
 
     public void onGetUsersList(GithubUsersSearch usersList);
 
-    public void onRefreshUser(GithubUser user);
-
     public void setProgressIndicator(boolean enabled);
+
+    public void onInjectDependencies();
 
     public void setLoadDataError(Throwable t);
 

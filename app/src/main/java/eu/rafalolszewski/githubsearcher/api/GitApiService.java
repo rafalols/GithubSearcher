@@ -19,7 +19,8 @@ public interface GitApiService {
 
     @GET("/search/users")
     Observable<GithubUsersSearch> searchUsers(
-            @Query("q") String q
+            @Query("q") String q,
+            @Query("per_page") int perPage
     );
 
 }

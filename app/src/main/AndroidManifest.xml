@@ -23,8 +23,6 @@
             android:parentActivityName=".view.activity.SearchActivity"
             />
 
-
-
         <!--SUGAR ORM-->
         <meta-data android:name="DATABASE" android:value="search_history.db" />
         <meta-data android:name="VERSION" android:value="1" />

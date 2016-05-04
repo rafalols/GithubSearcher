@@ -11,7 +11,7 @@ public interface BasePresenter {
 
     public void onCreate(Bundle savedInstanceState);
 
-    public void onSave(Bundle bundle);
+    public void onSave(Bundle outState);
 
     public void onStop();
 

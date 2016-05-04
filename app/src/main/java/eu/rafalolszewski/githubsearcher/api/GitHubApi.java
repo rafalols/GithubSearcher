@@ -12,6 +12,8 @@ import rx.schedulers.Schedulers;
  */
 public class GitHubApi {
 
+    private static final int PER_PAGE = 100;
+
     GitApiService service;
 
     public GitHubApi(GitApiService gitApiService) {
@@ -20,7 +22,7 @@ public class GitHubApi {
 
 
     public Observable<GithubUsersSearch> searchForUsers(String searchForUsers){
-        return service.searchUsers(searchForUsers)
+        return service.searchUsers(searchForUsers, PER_PAGE)
                 .subscribeOn(Schedulers.newThread());
     }
 

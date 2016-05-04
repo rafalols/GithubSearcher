@@ -15,4 +15,16 @@
         <item name="android:layout_margin">@dimen/label_margin</item>
     </style>
 
+    <style name="user_list_label">
+        <item name="android:layout_width">@dimen/user_list_label_width</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="detail_row_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/row_container_margit_top_bottom</item>
+        <item name="android:layout_marginBottom">@dimen/row_container_margit_top_bottom</item>
+    </style>
+
 </resources>

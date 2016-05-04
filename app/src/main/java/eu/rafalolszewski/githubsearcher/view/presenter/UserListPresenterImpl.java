@@ -4,6 +4,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.parceler.Parcels;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.api.GitHubApi;
 import eu.rafalolszewski.githubsearcher.model.GithubUser;
@@ -11,11 +16,8 @@ import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
 import eu.rafalolszewski.githubsearcher.view.activity.UserListActivity;
 import eu.rafalolszewski.githubsearcher.view.fragment.BaseView;
 import eu.rafalolszewski.githubsearcher.view.fragment.UserListView;
-import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by rafal on 02.05.16.
@@ -23,14 +25,21 @@ import rx.schedulers.Schedulers;
 public class UserListPresenterImpl implements UserListPresenter {
 
     private static final String TAG = "UserListPresenterImpl";
+    private static final String SEARCH_RESULT = "searchResults";
+
     UserListActivity activity;
-    UserListView userListView;
+    UserListView view;
 
     GitHubApi gitHubApi;
 
-    public UserListPresenterImpl(UserListActivity userListActivity, UserListView userListView) {
+    GithubUsersSearch cashedUserSearch;
+    Map<String, GithubUser> cashedUsersDetails;
+
+    public UserListPresenterImpl(UserListActivity userListActivity, UserListView view) {
         this.activity = userListActivity;
-        this.userListView = userListView;
+        this.view = view;
+
+        cashedUsersDetails = new HashMap<>();
 
         gitHubApi = userListActivity.getApi();
     }
@@ -38,9 +47,9 @@ public class UserListPresenterImpl implements UserListPresenter {
     @Override
     public void getUserList(String searchString) {
         if (gitHubApi == null){
-            Toast.makeText(activity, activity.getString(R.string.wait_for_api), Toast.LENGTH_LONG).show();
+            toast(activity.getString(R.string.wait_for_api));
         }else{
-            userListView.setProgressIndicator(true);
+            view.setProgressIndicator(true);
             gitHubApi.searchForUsers(searchString)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<GithubUsersSearch>() {
@@ -51,40 +60,39 @@ public class UserListPresenterImpl implements UserListPresenter {
 
                         @Override
                         public void onError(Throwable e) {
+                            toast(activity.getString(R.string.api_error));
                             Log.e(TAG, "onError: ", e);
                         }
 
                         @Override
                         public void onNext(GithubUsersSearch githubUsersSearch) {
+                            cashedUserSearch = githubUsersSearch;
                             onGetUsersList(githubUsersSearch);
                         }
                     });
         }
     }
 
+    @Override
+    public void clickUser(String name) {
+        //TODO: Open activity with user details
+    }
+
     private void onGetUsersList(GithubUsersSearch usersSearch){
-        userListView.setProgressIndicator(false);
-        userListView.onGetUsersList(usersSearch);
-        searchForUsersDetails(usersSearch);
+        view.setProgressIndicator(false);
+        view.onGetUsersList(usersSearch);
     }
 
-    private void searchForUsersDetails(GithubUsersSearch usersSearch) {
-        Observable.from(usersSearch.usersPreviews)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .map(user -> user.login)
-                .flatMap(login -> gitHubApi.getUser(login))
-                .subscribe(user -> onGetUserDetails(user));
-    }
-
-    private void onGetUserDetails(GithubUser user) {
-        userListView.onRefreshUser(user);
+    private void toast(String errorString) {
+        Toast.makeText(activity, errorString, Toast.LENGTH_SHORT).show();
     }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        if (savedInstanceState != null){
-            //TODO: get instance state, and refresh view
+        if (savedInstanceState != null && savedInstanceState.containsKey(SEARCH_RESULT)){
+            cashedUserSearch = Parcels.unwrap(savedInstanceState.getParcelable(SEARCH_RESULT));
+            view.onGetUsersList(cashedUserSearch);
         }else if (activity.getIntent().hasExtra(SearchPresenter.SEARCH_STRING)){
             String searchString = activity.getIntent().getStringExtra(SearchPresenter.SEARCH_STRING);
             getUserList(searchString);
@@ -92,8 +100,10 @@ public class UserListPresenterImpl implements UserListPresenter {
     }
 
     @Override
-    public void onSave(Bundle bundle) {
-
+    public void onSave(Bundle outState) {
+        if (cashedUserSearch != null) {
+            outState.putParcelable(SEARCH_RESULT, Parcels.wrap(cashedUserSearch));
+        }
     }
 
     @Override
@@ -103,6 +113,6 @@ public class UserListPresenterImpl implements UserListPresenter {
 
     @Override
     public void setView(BaseView view) {
-        userListView = (UserListView) view;
+        this.view = (UserListView) view;
     }
 }

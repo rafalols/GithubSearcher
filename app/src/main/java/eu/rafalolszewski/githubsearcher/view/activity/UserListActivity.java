@@ -29,7 +29,10 @@ public class UserListActivity extends BaseActivity {
         UserListFragment userListFragment = (UserListFragment) getSupportFragmentManager().findFragmentById(R.id.user_list_fragment);
 
         initComponent(userListFragment);
+
         component.inject(userListFragment);
+        userListFragment.onInjectDependencies();
+
         component.inject(this);
 
         presenter.onCreate(savedInstanceState);
@@ -41,4 +44,8 @@ public class UserListActivity extends BaseActivity {
                 .build();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 }

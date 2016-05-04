@@ -7,4 +7,6 @@ public interface UserListPresenter extends BasePresenter{
 
     public void getUserList(String searchString);
 
+    public void clickUser(String name);
+
 }

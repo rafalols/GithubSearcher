@@ -3,6 +3,7 @@ package eu.rafalolszewski.githubsearcher.dagger.module;
 import dagger.Module;
 import dagger.Provides;
 import eu.rafalolszewski.githubsearcher.dagger.scope.PerUserListActivity;
+import eu.rafalolszewski.githubsearcher.dao.HistoryDaoImpl;
 import eu.rafalolszewski.githubsearcher.view.activity.UserListActivity;
 import eu.rafalolszewski.githubsearcher.view.adapter.UserListAdapter;
 import eu.rafalolszewski.githubsearcher.view.fragment.UserListView;
@@ -25,8 +26,8 @@ public class UserListActivityModule {
 
     @Provides
     @PerUserListActivity
-    UserListPresenter providesUserListPresenter(){
-        return new UserListPresenterImpl(userListActivity, userListView);
+    UserListPresenter providesUserListPresenter(HistoryDaoImpl historyDao){
+        return new UserListPresenterImpl(userListActivity, userListView, historyDao);
     }
 
     @Provides

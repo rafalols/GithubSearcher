@@ -9,4 +9,6 @@ public interface SearchPresenter extends BasePresenter {
 
     public void search(String search);
 
+    public void onResume();
+
 }

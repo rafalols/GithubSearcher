@@ -11,8 +11,6 @@ public interface UserListView extends BaseView {
 
     public void setProgressIndicator(boolean enabled);
 
-    public void onInjectDependencies();
-
     public void setLoadDataError(Throwable t);
 
 }

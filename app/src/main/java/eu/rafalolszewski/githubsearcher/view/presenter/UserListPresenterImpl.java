@@ -11,12 +11,12 @@ import java.util.Map;
 
 import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.api.GitHubApi;
+import eu.rafalolszewski.githubsearcher.dao.HistoryDao;
 import eu.rafalolszewski.githubsearcher.model.GithubUser;
 import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
 import eu.rafalolszewski.githubsearcher.view.activity.UserListActivity;
 import eu.rafalolszewski.githubsearcher.view.fragment.BaseView;
 import eu.rafalolszewski.githubsearcher.view.fragment.UserListView;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -29,15 +29,17 @@ public class UserListPresenterImpl implements UserListPresenter {
 
     UserListActivity activity;
     UserListView view;
+    HistoryDao historyDao;
 
     GitHubApi gitHubApi;
 
     GithubUsersSearch cashedUserSearch;
     Map<String, GithubUser> cashedUsersDetails;
 
-    public UserListPresenterImpl(UserListActivity userListActivity, UserListView view) {
+    public UserListPresenterImpl(UserListActivity userListActivity, UserListView view, HistoryDao historyDao) {
         this.activity = userListActivity;
         this.view = view;
+        this.historyDao = historyDao;
 
         cashedUsersDetails = new HashMap<>();
 
@@ -52,25 +54,14 @@ public class UserListPresenterImpl implements UserListPresenter {
             view.setProgressIndicator(true);
             gitHubApi.searchForUsers(searchString)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<GithubUsersSearch>() {
-                        @Override
-                        public void onCompleted() {
-
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            toast(activity.getString(R.string.api_error));
-                            Log.e(TAG, "onError: ", e);
-                        }
-
-                        @Override
-                        public void onNext(GithubUsersSearch githubUsersSearch) {
-                            cashedUserSearch = githubUsersSearch;
-                            onGetUsersList(githubUsersSearch);
-                        }
-                    });
+                    .subscribe(userList -> onGetUsersList(userList),
+                            err -> onApiError(err));
         }
+    }
+
+    private void onApiError(Throwable e) {
+        toast(activity.getString(R.string.api_error));
+        Log.e(TAG, "onError: ", e);
     }
 
     @Override

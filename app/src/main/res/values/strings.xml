@@ -14,4 +14,5 @@
     <string name="label_user_repos">Repositories</string>
     <string name="api_error">Can\'t connect to GitHub</string>
     <string name="label_user_email">Email</string>
+    <string name="number_of_results">Results:</string>
 </resources>

@@ -7,4 +7,6 @@ public interface BaseView {
 
     public void initViewToPresenter();
 
+    public void onInjectDependencies();
+
 }

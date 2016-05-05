@@ -41,7 +41,6 @@ public class UserListFragment extends Fragment implements UserListView{
     UserListPresenter presenter;
 
 
-
     public UserListFragment() {
         // Required empty public constructor
     }
@@ -56,12 +55,6 @@ public class UserListFragment extends Fragment implements UserListView{
         ButterKnife.bind(this, view);
 
         return view;
-    }
-
-    private void setupRecyclerView() {
-        rwLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(rwLayoutManager);
-        recyclerView.setAdapter(rwAdapter);
     }
 
     @Override
@@ -81,6 +74,12 @@ public class UserListFragment extends Fragment implements UserListView{
     @Override
     public void onInjectDependencies() {
         setupRecyclerView();
+    }
+
+    private void setupRecyclerView() {
+        rwLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(rwLayoutManager);
+        recyclerView.setAdapter(rwAdapter);
     }
 
     @Override

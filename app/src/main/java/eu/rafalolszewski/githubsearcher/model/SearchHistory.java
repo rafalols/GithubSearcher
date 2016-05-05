@@ -9,14 +9,16 @@ public class SearchHistory extends SugarRecord {
 
     public String searchString;
     public long searchDate;
-    public int numberOdResults;
+    public int numberOfResults;
 
 
-    public SearchHistory(){}
+    public SearchHistory(){
 
-    public SearchHistory(String searchString, long searchDate, int numberOdResults) {
+    }
+
+    public SearchHistory(String searchString, long searchDate, int numberOfResults) {
         this.searchString = searchString;
         this.searchDate = searchDate;
-        this.numberOdResults = numberOdResults;
+        this.numberOfResults = numberOfResults;
     }
 }

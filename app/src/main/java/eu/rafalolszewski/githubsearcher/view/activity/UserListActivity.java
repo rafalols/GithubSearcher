@@ -40,6 +40,7 @@ public class UserListActivity extends BaseActivity {
 
     private void initComponent(UserListView userListView) {
         component = DaggerUserListActivityComponent.builder()
+                .applicationComponent(getAppComponent())
                 .userListActivityModule(new UserListActivityModule(this, userListView))
                 .build();
     }

@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import com.orm.SugarContext;
 
 import java.util.concurrent.Executors;
 
@@ -62,4 +63,9 @@ public class GitHubSearcherApplication extends Application {
                 });
     }
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        SugarContext.terminate();
+    }
 }

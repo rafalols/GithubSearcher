@@ -12,7 +12,7 @@ import eu.rafalolszewski.githubsearcher.view.presenter.UserListPresenter;
  * Created by rafal on 02.05.16.
  */
 @PerUserListActivity
-@Component(modules = UserListActivityModule.class)
+@Component(dependencies = ApplicationComponent.class, modules = UserListActivityModule.class)
 public interface UserListActivityComponent {
 
     UserListPresenter userListPresenter();

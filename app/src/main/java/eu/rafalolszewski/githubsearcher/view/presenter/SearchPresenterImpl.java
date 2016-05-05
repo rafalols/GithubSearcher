@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import eu.rafalolszewski.githubsearcher.R;
+import eu.rafalolszewski.githubsearcher.dao.HistoryDao;
 import eu.rafalolszewski.githubsearcher.view.activity.SearchActivity;
 import eu.rafalolszewski.githubsearcher.view.activity.UserListActivity;
 import eu.rafalolszewski.githubsearcher.view.fragment.BaseView;
@@ -17,10 +18,12 @@ public class SearchPresenterImpl implements SearchPresenter {
 
     SearchActivity activity;
     SearchView searchView;
+    HistoryDao historyDao;
 
-    public SearchPresenterImpl(SearchActivity searchActivity, SearchView searchView) {
+    public SearchPresenterImpl(SearchActivity searchActivity, SearchView searchView, HistoryDao historyDao) {
         this.activity = searchActivity;
         this.searchView = searchView;
+        this.historyDao = historyDao;
     }
 
     @Override
@@ -37,8 +40,17 @@ public class SearchPresenterImpl implements SearchPresenter {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onResume() {
+        refreshHistory();
+    }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        refreshHistory();
+    }
+
+    private void refreshHistory() {
+        searchView.refreshHistory(historyDao.getHistory());
     }
 
     @Override

@@ -3,7 +3,9 @@ package eu.rafalolszewski.githubsearcher.dagger.module;
 import dagger.Module;
 import dagger.Provides;
 import eu.rafalolszewski.githubsearcher.dagger.scope.PerSearchActivity;
+import eu.rafalolszewski.githubsearcher.dao.HistoryDaoImpl;
 import eu.rafalolszewski.githubsearcher.view.activity.SearchActivity;
+import eu.rafalolszewski.githubsearcher.view.adapter.HistoryAdapter;
 import eu.rafalolszewski.githubsearcher.view.fragment.SearchView;
 import eu.rafalolszewski.githubsearcher.view.presenter.SearchPresenter;
 import eu.rafalolszewski.githubsearcher.view.presenter.SearchPresenterImpl;
@@ -24,8 +26,14 @@ public class SearchActivityModule {
 
     @Provides
     @PerSearchActivity
-    SearchPresenter providesSearchPresenter(){
-        return new SearchPresenterImpl(searchActivity, searchView);
+    SearchPresenter providesSearchPresenter(HistoryDaoImpl historyDao){
+        return new SearchPresenterImpl(searchActivity, searchView, historyDao);
+    }
+
+    @Provides
+    @PerSearchActivity
+    HistoryAdapter providesHistoryAdapter(){
+        return new HistoryAdapter(searchActivity);
     }
 
 }

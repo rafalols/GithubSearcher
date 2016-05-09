@@ -32,8 +32,8 @@ public class SearchActivityModule {
 
     @Provides
     @PerSearchActivity
-    HistoryAdapter providesHistoryAdapter(){
-        return new HistoryAdapter(searchActivity);
+    HistoryAdapter providesHistoryAdapter(SearchPresenter presenter){
+        return new HistoryAdapter(searchActivity, presenter);
     }
 
 }

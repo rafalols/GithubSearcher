@@ -1,51 +1,45 @@
 package eu.rafalolszewski.githubsearcher.dao;
 
-import android.content.Context;
-
-import com.orm.SugarContext;
-import com.orm.query.Select;
-
 import java.util.Date;
 import java.util.List;
 
 import eu.rafalolszewski.githubsearcher.model.SearchHistory;
+import io.realm.Realm;
+import io.realm.Sort;
 
 /**
  * Created by rafal on 05.05.16.
  */
 public class HistoryDaoImpl implements HistoryDao {
 
-    private static final String ORDER_BY = "search_date DESC";
+    private static final String ORDERBY_FIELD = "searchDate";
 
-    public HistoryDaoImpl(Context context) {
-        SugarContext.init(context);
+    private Realm realm;
+
+    public HistoryDaoImpl(Realm realm) {
+        this.realm = realm;
     }
 
     @Override
     public List<SearchHistory> getHistory() {
-        return Select.from(SearchHistory.class)
-                .orderBy(ORDER_BY)
-                .list();
+        return realm.where(SearchHistory.class).findAllSorted(ORDERBY_FIELD, Sort.DESCENDING);
     }
 
     @Override
     public void putSearchToHistory(String searchString, int numberOfResults) {
-        String where = "searchString = " + searchString;
-        SearchHistory searchHistory = SearchHistory.find(SearchHistory.class, where).get(0);
-        if (searchHistory != null){
-            searchHistory.searchDate = getDate();
-            searchHistory.numberOfResults = numberOfResults;
-            searchHistory.save();
-        }else {
-            searchHistory = new SearchHistory(searchString, getDate(), numberOfResults);
-            searchHistory.save();
-        }
+        SearchHistory search = new SearchHistory();
+        search.setSearchString(searchString);
+        search.setSearchDate(getCurrentDate());
+        search.setNumberOfResults(numberOfResults);
+
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(search);
+        realm.commitTransaction();
     }
 
-    private long getDate() {
+    private long getCurrentDate() {
         Date date = new Date();
         return date.getTime();
     }
-
 
 }

@@ -54,7 +54,7 @@ public class UserListPresenterImpl implements UserListPresenter {
             view.setProgressIndicator(true);
             gitHubApi.searchForUsers(searchString)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(userList -> onGetUsersList(userList),
+                    .subscribe(userList -> onGetUsersList(userList, searchString),
                             err -> onApiError(err));
         }
     }
@@ -69,7 +69,8 @@ public class UserListPresenterImpl implements UserListPresenter {
         //TODO: Open activity with user details
     }
 
-    private void onGetUsersList(GithubUsersSearch usersSearch){
+    private void onGetUsersList(GithubUsersSearch usersSearch, String searchString){
+        historyDao.putSearchToHistory(searchString, usersSearch.count);
         view.setProgressIndicator(false);
         view.onGetUsersList(usersSearch);
     }

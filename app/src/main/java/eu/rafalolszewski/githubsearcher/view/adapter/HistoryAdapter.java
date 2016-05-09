@@ -11,6 +11,7 @@ import java.util.List;
 
 import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.model.SearchHistory;
+import eu.rafalolszewski.githubsearcher.view.presenter.SearchPresenter;
 
 /**
  * Created by rafal on 05.05.16.
@@ -19,9 +20,11 @@ public class HistoryAdapter extends BaseAdapter {
 
     private List<SearchHistory> searchHistoryList;
     private Context context;
+    private SearchPresenter presenter;
 
-    public HistoryAdapter(Context context) {
+    public HistoryAdapter(Context context, SearchPresenter presenter) {
         this.context = context;
+        this.presenter = presenter;
     }
 
     @Override
@@ -51,6 +54,13 @@ public class HistoryAdapter extends BaseAdapter {
 
         search.setText(item.searchString);
         results.setText(context.getString(R.string.number_of_results) + item.numberOfResults);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.search(item.searchString);
+            }
+        });
 
         return view;
     }

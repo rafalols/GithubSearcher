@@ -6,6 +6,8 @@ import dagger.Module;
 import dagger.Provides;
 import eu.rafalolszewski.githubsearcher.GitHubSearcherApplication;
 import eu.rafalolszewski.githubsearcher.dao.HistoryDaoImpl;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * Created by rafal on 02.05.16.
@@ -27,8 +29,23 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    HistoryDaoImpl providesHistoryDaoImpl(){
-        return new HistoryDaoImpl(application);
+    RealmConfiguration providesRealmConfiguration(){
+        return new RealmConfiguration.Builder(application)
+                .name("searchhistory.realm")
+                .schemaVersion(1)
+                .build();
+    }
+
+    @Singleton
+    @Provides
+    Realm providesRealm(RealmConfiguration realmConfiguration){
+        return Realm.getInstance(realmConfiguration);
+    }
+
+    @Singleton
+    @Provides
+    HistoryDaoImpl providesHistoryDaoImpl(Realm realm){
+        return new HistoryDaoImpl(realm);
     }
 
 }

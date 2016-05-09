@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -20,6 +18,7 @@ import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.model.SearchHistory;
 import eu.rafalolszewski.githubsearcher.view.adapter.HistoryAdapter;
 import eu.rafalolszewski.githubsearcher.view.presenter.SearchPresenter;
+import rx.Observable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,8 +59,14 @@ public class SearchFragment extends Fragment implements SearchView {
     }
 
     @Override
-    public void refreshHistory(List<SearchHistory> searchHistory) {
-        historyAdapter.setSearchHistoryList(searchHistory);
+    public void refreshHistory(Observable<SearchHistory> searchHistory) {
+        historyAdapter.getSearchHistoryList().clear();
+        searchHistory
+                .subscribe(history -> refreshHistoryAdapter(history));
+    }
+
+    private void refreshHistoryAdapter(SearchHistory history){
+        historyAdapter.getSearchHistoryList().add(history);
         historyAdapter.notifyDataSetChanged();
     }
 

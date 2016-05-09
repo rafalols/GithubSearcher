@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import eu.rafalolszewski.githubsearcher.R;
@@ -18,7 +19,7 @@ import eu.rafalolszewski.githubsearcher.view.presenter.SearchPresenter;
  */
 public class HistoryAdapter extends BaseAdapter {
 
-    private List<SearchHistory> searchHistoryList;
+    private List<SearchHistory> searchHistoryList = new ArrayList<>();
     private Context context;
     private SearchPresenter presenter;
 
@@ -65,7 +66,7 @@ public class HistoryAdapter extends BaseAdapter {
         return view;
     }
 
-    public void setSearchHistoryList(List<SearchHistory> searchHistoryList) {
-        this.searchHistoryList = searchHistoryList;
+    public List<SearchHistory> getSearchHistoryList() {
+        return searchHistoryList;
     }
 }

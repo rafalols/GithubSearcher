@@ -13,7 +13,7 @@ import rx.Observable;
 public class HistoryDaoImpl implements HistoryDao {
 
     private static final String ORDERBY_FIELD = "searchDate";
-    private static final int HISTORY_SIZE = 20;
+    private static final int HISTORY_SIZE = 10;
 
     private Realm realm;
 
@@ -26,7 +26,7 @@ public class HistoryDaoImpl implements HistoryDao {
         return realm.where(SearchHistory.class).findAllSorted(ORDERBY_FIELD, Sort.DESCENDING)
                 .asObservable()
                 .flatMap(histories -> Observable.from(histories))
-                .take(5);
+                .take(HISTORY_SIZE);
     }
 
     @Override

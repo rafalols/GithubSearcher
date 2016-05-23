@@ -1,4 +1,4 @@
-package eu.rafalolszewski.githubsearcher.view.activity;
+package eu.rafalolszewski.githubsearcher.ui.search;
 
 import android.os.Bundle;
 
@@ -8,16 +8,14 @@ import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.dagger.component.DaggerSearchActivityComponent;
 import eu.rafalolszewski.githubsearcher.dagger.component.SearchActivityComponent;
 import eu.rafalolszewski.githubsearcher.dagger.module.SearchActivityModule;
-import eu.rafalolszewski.githubsearcher.view.fragment.SearchFragment;
-import eu.rafalolszewski.githubsearcher.view.fragment.SearchView;
-import eu.rafalolszewski.githubsearcher.view.presenter.SearchPresenter;
+import eu.rafalolszewski.githubsearcher.ui.base.BaseActivity;
 
 public class SearchActivity extends BaseActivity {
 
     public SearchActivityComponent component;
 
     @Inject
-    SearchPresenter presenter;
+    public SearchVP.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +32,7 @@ public class SearchActivity extends BaseActivity {
         searchFragment.onInjectDependencies();
     }
 
-    private void initComponent(SearchView searchView){
+    private void initComponent(SearchVP.View searchView){
         component = DaggerSearchActivityComponent.builder()
                 .applicationComponent(getAppComponent())
                 .searchActivityModule(new SearchActivityModule(this, searchView))

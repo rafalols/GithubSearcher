@@ -1,5 +1,6 @@
-package eu.rafalolszewski.githubsearcher.view.presenter;
+package eu.rafalolszewski.githubsearcher.ui.users_list;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,29 +15,30 @@ import eu.rafalolszewski.githubsearcher.api.GitHubApi;
 import eu.rafalolszewski.githubsearcher.dao.HistoryDao;
 import eu.rafalolszewski.githubsearcher.model.GithubUser;
 import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
-import eu.rafalolszewski.githubsearcher.view.activity.UserListActivity;
-import eu.rafalolszewski.githubsearcher.view.fragment.BaseView;
-import eu.rafalolszewski.githubsearcher.view.fragment.UserListView;
+import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsActivity;
+import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsVP;
+import eu.rafalolszewski.githubsearcher.ui.search.SearchVP;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by rafal on 02.05.16.
  */
-public class UserListPresenterImpl implements UserListPresenter {
+public class UserListPresenter implements UserListVP.Presenter {
 
-    private static final String TAG = "UserListPresenterImpl";
+    private static final String TAG = "UserListPresenter";
     private static final String SEARCH_RESULT = "searchResults";
 
-    UserListActivity activity;
-    UserListView view;
-    HistoryDao historyDao;
 
-    GitHubApi gitHubApi;
+    private UserListActivity activity;
+    private UserListVP.View view;
+    private HistoryDao historyDao;
 
-    GithubUsersSearch cashedUserSearch;
-    Map<String, GithubUser> cashedUsersDetails;
+    private GitHubApi gitHubApi;
 
-    public UserListPresenterImpl(UserListActivity userListActivity, UserListView view, HistoryDao historyDao) {
+    private GithubUsersSearch cashedUserSearch;
+    private Map<String, GithubUser> cashedUsersDetails;
+
+    public UserListPresenter(UserListActivity userListActivity, UserListVP.View view, HistoryDao historyDao) {
         this.activity = userListActivity;
         this.view = view;
         this.historyDao = historyDao;
@@ -66,7 +68,9 @@ public class UserListPresenterImpl implements UserListPresenter {
 
     @Override
     public void clickUser(String name) {
-        //TODO: Open activity with user details
+        Intent intent = new Intent(activity, UserDetailsActivity.class);
+        intent.putExtra(UserDetailsVP.Presenter.ARG_USERNAME, name);
+        activity.startActivity(intent);
     }
 
     private void onGetUsersList(GithubUsersSearch usersSearch, String searchString){
@@ -85,8 +89,8 @@ public class UserListPresenterImpl implements UserListPresenter {
         if (savedInstanceState != null && savedInstanceState.containsKey(SEARCH_RESULT)){
             cashedUserSearch = Parcels.unwrap(savedInstanceState.getParcelable(SEARCH_RESULT));
             view.onGetUsersList(cashedUserSearch);
-        }else if (activity.getIntent().hasExtra(SearchPresenter.SEARCH_STRING)){
-            String searchString = activity.getIntent().getStringExtra(SearchPresenter.SEARCH_STRING);
+        }else if (activity.getIntent().hasExtra(SearchVP.Presenter.SEARCH_STRING)){
+            String searchString = activity.getIntent().getStringExtra(SearchVP.Presenter.SEARCH_STRING);
             getUserList(searchString);
         }
     }
@@ -98,13 +102,4 @@ public class UserListPresenterImpl implements UserListPresenter {
         }
     }
 
-    @Override
-    public void onStop() {
-
-    }
-
-    @Override
-    public void setView(BaseView view) {
-        this.view = (UserListView) view;
-    }
 }

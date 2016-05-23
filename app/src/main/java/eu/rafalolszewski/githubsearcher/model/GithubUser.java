@@ -2,9 +2,12 @@ package eu.rafalolszewski.githubsearcher.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by rafal on 02.05.16.
  */
+@Parcel
 public class GithubUser {
 
     public int id;

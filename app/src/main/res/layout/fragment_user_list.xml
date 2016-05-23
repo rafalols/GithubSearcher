@@ -1,22 +1,36 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="eu.rafalolszewski.githubsearcher.view.fragment.UserListFragment"
+    tools:context="eu.rafalolszewski.githubsearcher.ui.users_list.UserListFragment"
     tools:showIn="@layout/activity_user_list">
 
 
-    <TextView
-        android:id="@+id/label_users"
-        android:text="@string/Users"
-        style="@style/label"/>
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_user_list"
-        android:scrollbars="vertical"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/label_users"
+            android:text="@string/Users"
+            style="@style/label"/>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_user_list"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_centerInParent="true"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:visibility="invisible"
+        />
+
+</RelativeLayout>

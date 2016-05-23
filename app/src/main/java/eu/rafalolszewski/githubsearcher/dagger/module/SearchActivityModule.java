@@ -4,11 +4,10 @@ import dagger.Module;
 import dagger.Provides;
 import eu.rafalolszewski.githubsearcher.dagger.scope.PerSearchActivity;
 import eu.rafalolszewski.githubsearcher.dao.HistoryDaoImpl;
-import eu.rafalolszewski.githubsearcher.view.activity.SearchActivity;
-import eu.rafalolszewski.githubsearcher.view.adapter.HistoryAdapter;
-import eu.rafalolszewski.githubsearcher.view.fragment.SearchView;
-import eu.rafalolszewski.githubsearcher.view.presenter.SearchPresenter;
-import eu.rafalolszewski.githubsearcher.view.presenter.SearchPresenterImpl;
+import eu.rafalolszewski.githubsearcher.ui.search.SearchActivity;
+import eu.rafalolszewski.githubsearcher.ui.search.HistoryAdapter;
+import eu.rafalolszewski.githubsearcher.ui.search.SearchPresenter;
+import eu.rafalolszewski.githubsearcher.ui.search.SearchVP;
 
 /**
  * Created by rafal on 02.05.16.
@@ -17,22 +16,22 @@ import eu.rafalolszewski.githubsearcher.view.presenter.SearchPresenterImpl;
 public class SearchActivityModule {
 
     private SearchActivity searchActivity;
-    private SearchView searchView;
+    private SearchVP.View searchView;
 
-    public SearchActivityModule(SearchActivity searchActivity, SearchView searchView) {
+    public SearchActivityModule(SearchActivity searchActivity, SearchVP.View searchView) {
         this.searchActivity = searchActivity;
         this.searchView = searchView;
     }
 
     @Provides
     @PerSearchActivity
-    SearchPresenter providesSearchPresenter(HistoryDaoImpl historyDao){
-        return new SearchPresenterImpl(searchActivity, searchView, historyDao);
+    SearchVP.Presenter providesSearchPresenter(HistoryDaoImpl historyDao){
+        return new SearchPresenter(searchActivity, searchView, historyDao);
     }
 
     @Provides
     @PerSearchActivity
-    HistoryAdapter providesHistoryAdapter(SearchPresenter presenter){
+    HistoryAdapter providesHistoryAdapter(SearchVP.Presenter presenter){
         return new HistoryAdapter(searchActivity, presenter);
     }
 

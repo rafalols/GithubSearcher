@@ -1,0 +1,85 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="eu.rafalolszewski.githubsearcher.ui.details.UserDetailsFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/image"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center_horizontal"
+            tools:src="@drawable/abc_ab_share_pack_mtrl_alpha"
+            />
+
+        <TextView
+            style="@style/label"
+            android:text="@string/label_user_login"
+            />
+
+        <TextView
+            android:id="@+id/login"
+            style="@style/value"
+            tools:text="UserName123"
+            />
+
+        <TextView
+            style="@style/label"
+            android:text="@string/label_user_name"
+            />
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/value"
+            tools:text="Rafał Olszewski"
+            />
+
+        <TextView
+            style="@style/label"
+            android:text="@string/label_user_email"
+            />
+
+        <TextView
+            android:id="@+id/email"
+            style="@style/value"
+            tools:text="longusername@longdomain-mail.com.pl"
+            />
+
+        <TextView
+            android:text="@string/label_user_fallowers"
+            style="@style/label" />
+
+        <TextView
+            android:id="@+id/followers"
+            style="@style/value"
+            tools:text="102"
+            />
+
+        <TextView
+            android:text="@string/label_user_repos"
+            style="@style/label" />
+
+        <TextView
+            android:id="@+id/repos"
+            style="@style/value"
+            tools:text="274"
+            />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_centerInParent="true"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:visibility="invisible"
+        />
+
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package eu.rafalolszewski.githubsearcher.view.activity;
+package eu.rafalolszewski.githubsearcher.ui.users_list;
 
 import android.os.Bundle;
 
@@ -9,9 +9,7 @@ import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.dagger.component.DaggerUserListActivityComponent;
 import eu.rafalolszewski.githubsearcher.dagger.component.UserListActivityComponent;
 import eu.rafalolszewski.githubsearcher.dagger.module.UserListActivityModule;
-import eu.rafalolszewski.githubsearcher.view.fragment.UserListFragment;
-import eu.rafalolszewski.githubsearcher.view.fragment.UserListView;
-import eu.rafalolszewski.githubsearcher.view.presenter.UserListPresenter;
+import eu.rafalolszewski.githubsearcher.ui.base.BaseActivity;
 
 public class UserListActivity extends BaseActivity {
 
@@ -19,7 +17,7 @@ public class UserListActivity extends BaseActivity {
     private GitHubSearcherApplication app;
 
     @Inject
-    UserListPresenter presenter;
+    public UserListVP.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +36,7 @@ public class UserListActivity extends BaseActivity {
         presenter.onCreate(savedInstanceState);
     }
 
-    private void initComponent(UserListView userListView) {
+    private void initComponent(UserListVP.View userListView) {
         component = DaggerUserListActivityComponent.builder()
                 .applicationComponent(getAppComponent())
                 .userListActivityModule(new UserListActivityModule(this, userListView))

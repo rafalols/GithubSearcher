@@ -1,4 +1,4 @@
-package eu.rafalolszewski.githubsearcher.view.adapter;
+package eu.rafalolszewski.githubsearcher.ui.search;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import java.util.List;
 
 import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.model.SearchHistory;
-import eu.rafalolszewski.githubsearcher.view.presenter.SearchPresenter;
 
 /**
  * Created by rafal on 05.05.16.
@@ -21,9 +20,9 @@ public class HistoryAdapter extends BaseAdapter {
 
     private List<SearchHistory> searchHistoryList = new ArrayList<>();
     private Context context;
-    private SearchPresenter presenter;
+    private SearchVP.Presenter presenter;
 
-    public HistoryAdapter(Context context, SearchPresenter presenter) {
+    public HistoryAdapter(Context context, SearchVP.Presenter presenter) {
         this.context = context;
         this.presenter = presenter;
     }

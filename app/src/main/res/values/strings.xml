@@ -10,9 +10,10 @@
     <string name="wait_for_api">Please wait for API</string>
     <string name="Users">Users:</string>
     <string name="label_user_name">Name</string>
-    <string name="label_user_fallowers">Fallowers</string>
-    <string name="label_user_repos">Repositories</string>
+    <string name="label_user_fallowers">Number of fallowers</string>
+    <string name="label_user_repos">Number of repositories</string>
     <string name="api_error">Can\'t connect to GitHub</string>
     <string name="label_user_email">Email</string>
     <string name="number_of_results">Results:</string>
+    <string name="label_user_login">Login</string>
 </resources>

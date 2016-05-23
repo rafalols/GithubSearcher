@@ -1,4 +1,4 @@
-package eu.rafalolszewski.githubsearcher.view.adapter;
+package eu.rafalolszewski.githubsearcher.ui.users_list;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +13,6 @@ import com.squareup.picasso.Picasso;
 import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
 import eu.rafalolszewski.githubsearcher.model.UserPreview;
-import eu.rafalolszewski.githubsearcher.view.presenter.UserListPresenter;
 
 /**
  * Created by Rafał Olszewski on 02.05.16.
@@ -22,9 +21,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     private GithubUsersSearch usersList;
     private Context context;
-    private UserListPresenter presenter;
+    private UserListVP.Presenter presenter;
 
-    public UserListAdapter(Context context, UserListPresenter presenter) {
+    public UserListAdapter(Context context, UserListVP.Presenter presenter) {
         this.context = context;
         this.presenter = presenter;
     }
@@ -43,7 +42,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             UserPreview user = usersList.usersPreviews.get(position);
             Picasso.with(context).load(user.avatarUrl).into(holder.avatar);
             holder.name.setText(user.login);
-            holder.avatar.setOnClickListener(new OnAvatarClickListener(user.login));
+            holder.itemView.setOnClickListener(new OnItemClickListener(user.login));
         }
     }
 
@@ -66,14 +65,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         public ViewHolder(View itemView) {
             super(itemView);
             avatar = (ImageView) itemView.findViewById(R.id.avatar);
-            name = (TextView) itemView.findViewById(R.id.name);
+            name = (TextView) itemView.findViewById(R.id.login);
         }
     }
 
-    public class OnAvatarClickListener implements View.OnClickListener{
+    public class OnItemClickListener implements View.OnClickListener{
 
         String userName;
-        public OnAvatarClickListener(String userName) {
+        public OnItemClickListener(String userName) {
             this.userName = userName;
         }
 

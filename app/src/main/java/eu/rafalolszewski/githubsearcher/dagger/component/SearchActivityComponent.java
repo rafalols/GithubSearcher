@@ -3,10 +3,10 @@ package eu.rafalolszewski.githubsearcher.dagger.component;
 import dagger.Component;
 import eu.rafalolszewski.githubsearcher.dagger.module.SearchActivityModule;
 import eu.rafalolszewski.githubsearcher.dagger.scope.PerSearchActivity;
-import eu.rafalolszewski.githubsearcher.view.activity.SearchActivity;
-import eu.rafalolszewski.githubsearcher.view.adapter.HistoryAdapter;
-import eu.rafalolszewski.githubsearcher.view.fragment.SearchFragment;
-import eu.rafalolszewski.githubsearcher.view.presenter.SearchPresenter;
+import eu.rafalolszewski.githubsearcher.ui.search.HistoryAdapter;
+import eu.rafalolszewski.githubsearcher.ui.search.SearchActivity;
+import eu.rafalolszewski.githubsearcher.ui.search.SearchFragment;
+import eu.rafalolszewski.githubsearcher.ui.search.SearchVP;
 
 /**
  * Created by rafal on 02.05.16.
@@ -15,7 +15,7 @@ import eu.rafalolszewski.githubsearcher.view.presenter.SearchPresenter;
 @Component(dependencies = ApplicationComponent.class, modules = SearchActivityModule.class)
 public interface SearchActivityComponent {
 
-    SearchPresenter searchPresenter();
+    SearchVP.Presenter searchPresenter();
 
     HistoryAdapter historyAdapter();
 

@@ -1,4 +1,4 @@
-package eu.rafalolszewski.githubsearcher.view.activity;
+package eu.rafalolszewski.githubsearcher.ui.base;
 
 import android.support.v7.app.AppCompatActivity;
 

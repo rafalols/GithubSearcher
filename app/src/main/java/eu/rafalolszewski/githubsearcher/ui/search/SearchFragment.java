@@ -1,4 +1,4 @@
-package eu.rafalolszewski.githubsearcher.view.fragment;
+package eu.rafalolszewski.githubsearcher.ui.search;
 
 
 import android.os.Bundle;
@@ -16,14 +16,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.model.SearchHistory;
-import eu.rafalolszewski.githubsearcher.view.adapter.HistoryAdapter;
-import eu.rafalolszewski.githubsearcher.view.presenter.SearchPresenter;
 import rx.Observable;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchFragment extends Fragment implements SearchView {
+public class SearchFragment extends Fragment implements SearchVP.View {
 
     @Bind(R.id.edittext_searcher)
     EditText searchText;
@@ -37,7 +35,7 @@ public class SearchFragment extends Fragment implements SearchView {
     }
 
     @Inject
-    SearchPresenter presenter;
+    SearchVP.Presenter presenter;
 
     @Inject
     HistoryAdapter historyAdapter;
@@ -68,11 +66,6 @@ public class SearchFragment extends Fragment implements SearchView {
     private void refreshHistoryAdapter(SearchHistory history){
         historyAdapter.getSearchHistoryList().add(history);
         historyAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void initViewToPresenter() {
-        presenter.setView(this);
     }
 
     @Override

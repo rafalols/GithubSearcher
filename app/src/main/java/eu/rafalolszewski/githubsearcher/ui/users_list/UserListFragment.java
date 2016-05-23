@@ -1,4 +1,4 @@
-package eu.rafalolszewski.githubsearcher.view.fragment;
+package eu.rafalolszewski.githubsearcher.ui.users_list;
 
 
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -16,13 +17,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
-import eu.rafalolszewski.githubsearcher.view.adapter.UserListAdapter;
-import eu.rafalolszewski.githubsearcher.view.presenter.UserListPresenter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UserListFragment extends Fragment implements UserListView{
+public class UserListFragment extends Fragment implements UserListVP.View{
 
     private static final String TAG = "UserListFragment";
 
@@ -32,14 +31,16 @@ public class UserListFragment extends Fragment implements UserListView{
     @Bind(R.id.recycler_user_list)
     RecyclerView recyclerView;
 
+    @Bind(R.id.progressbar)
+    ProgressBar progressBar;
+
     RecyclerView.LayoutManager rwLayoutManager;
 
     @Inject
     UserListAdapter rwAdapter;
 
     @Inject
-    UserListPresenter presenter;
-
+    UserListVP.Presenter presenter;
 
     public UserListFragment() {
         // Required empty public constructor
@@ -68,7 +69,11 @@ public class UserListFragment extends Fragment implements UserListView{
 
     @Override
     public void setProgressIndicator(boolean enabled) {
-
+        if (enabled){
+            progressBar.setVisibility(View.VISIBLE);
+        }else {
+            progressBar.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -87,8 +92,4 @@ public class UserListFragment extends Fragment implements UserListView{
 
     }
 
-    @Override
-    public void initViewToPresenter() {
-        presenter.setView(this);
-    }
 }

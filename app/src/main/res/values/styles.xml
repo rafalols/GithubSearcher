@@ -15,6 +15,14 @@
         <item name="android:layout_margin">@dimen/label_margin</item>
     </style>
 
+    <style name="value">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/value_margin_side</item>
+        <item name="android:layout_marginRight">@dimen/value_margin_side</item>
+    </style>
+
     <style name="user_list_label">
         <item name="android:layout_width">@dimen/user_list_label_width</item>
         <item name="android:layout_height">wrap_content</item>

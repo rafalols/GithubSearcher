@@ -7,11 +7,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".view.activity.SearchActivity">
+    tools:context=".ui.search.SearchActivity">
 
     <fragment
         android:id="@+id/search_fragment"
-        android:name="eu.rafalolszewski.githubsearcher.view.fragment.SearchFragment"
+        android:name="eu.rafalolszewski.githubsearcher.ui.search.SearchFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_search" />

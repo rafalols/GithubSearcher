@@ -1,4 +1,4 @@
-package eu.rafalolszewski.githubsearcher.view.presenter;
+package eu.rafalolszewski.githubsearcher.ui.search;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,21 +6,18 @@ import android.widget.Toast;
 
 import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.dao.HistoryDao;
-import eu.rafalolszewski.githubsearcher.view.activity.SearchActivity;
-import eu.rafalolszewski.githubsearcher.view.activity.UserListActivity;
-import eu.rafalolszewski.githubsearcher.view.fragment.BaseView;
-import eu.rafalolszewski.githubsearcher.view.fragment.SearchView;
+import eu.rafalolszewski.githubsearcher.ui.users_list.UserListActivity;
 
 /**
  * Created by rafal on 02.05.16.
  */
-public class SearchPresenterImpl implements SearchPresenter {
+public class SearchPresenter implements SearchVP.Presenter {
 
-    SearchActivity activity;
-    SearchView searchView;
-    HistoryDao historyDao;
+    private SearchActivity activity;
+    private SearchVP.View searchView;
+    private HistoryDao historyDao;
 
-    public SearchPresenterImpl(SearchActivity searchActivity, SearchView searchView, HistoryDao historyDao) {
+    public SearchPresenter(SearchActivity searchActivity, SearchVP.View searchView, HistoryDao historyDao) {
         this.activity = searchActivity;
         this.searchView = searchView;
         this.historyDao = historyDao;
@@ -58,13 +55,4 @@ public class SearchPresenterImpl implements SearchPresenter {
 
     }
 
-    @Override
-    public void onStop() {
-
-    }
-
-    @Override
-    public void setView(BaseView view) {
-        searchView = (SearchView) view;
-    }
 }

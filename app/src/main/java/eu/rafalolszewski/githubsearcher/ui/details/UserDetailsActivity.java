@@ -1,5 +1,6 @@
 package eu.rafalolszewski.githubsearcher.ui.details;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import javax.inject.Inject;
@@ -22,6 +23,8 @@ public class UserDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
 
+        waitForLoadImage();
+
         UserDetailsFragment fragment = (UserDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.user_details_fragment);
 
         initComponent(fragment);
@@ -36,5 +39,17 @@ public class UserDetailsActivity extends BaseActivity {
                 .applicationComponent(getAppComponent())
                 .userDetailsModule(new UserDetailsModule(this, detailsView))
                 .build();
+    }
+
+    public void waitForLoadImage(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            postponeEnterTransition();
+        }
+    }
+
+    public void whenImageIsLoaded(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startPostponedEnterTransition();
+        }
     }
 }

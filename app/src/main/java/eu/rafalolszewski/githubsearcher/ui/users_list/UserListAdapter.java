@@ -42,7 +42,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             UserPreview user = usersList.usersPreviews.get(position);
             Picasso.with(context).load(user.avatarUrl).into(holder.avatar);
             holder.name.setText(user.login);
-            holder.itemView.setOnClickListener(new OnItemClickListener(user.login));
+            holder.itemView.setOnClickListener(new OnItemClickListener(user.login, holder.avatar));
         }
     }
 
@@ -72,13 +72,16 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     public class OnItemClickListener implements View.OnClickListener{
 
         String userName;
-        public OnItemClickListener(String userName) {
+        View viewForTransaction;
+
+        public OnItemClickListener(String userName, View viewForTransaction) {
             this.userName = userName;
+            this.viewForTransaction = viewForTransaction;
         }
 
         @Override
         public void onClick(View v) {
-            presenter.clickUser(userName);
+            presenter.clickUser(userName, viewForTransaction);
         }
     }
 

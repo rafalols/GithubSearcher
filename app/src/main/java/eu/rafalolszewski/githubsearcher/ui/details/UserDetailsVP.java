@@ -24,6 +24,7 @@ public interface UserDetailsVP {
 
         void getUserByName(String userId);
 
+        void onLoadedImage(boolean succedd);
     }
 
 }

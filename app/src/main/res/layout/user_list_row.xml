@@ -3,9 +3,9 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
         <ImageView
             android:id="@+id/avatar"
+            android:transitionName="avatar"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="4dp"/>
@@ -17,6 +17,5 @@
             android:layout_marginLeft="32dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
-
 
 </LinearLayout>

@@ -2,7 +2,9 @@ package eu.rafalolszewski.githubsearcher.ui.users_list;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import org.parceler.Parcels;
@@ -27,7 +29,7 @@ public class UserListPresenter implements UserListVP.Presenter {
 
     private static final String TAG = "UserListPresenter";
     private static final String SEARCH_RESULT = "searchResults";
-
+    private static final String AVATAR = "avatar";
 
     private UserListActivity activity;
     private UserListVP.View view;
@@ -67,10 +69,14 @@ public class UserListPresenter implements UserListVP.Presenter {
     }
 
     @Override
-    public void clickUser(String name) {
+    public void clickUser(String name, View avatarForTransition) {
         Intent intent = new Intent(activity, UserDetailsActivity.class);
         intent.putExtra(UserDetailsVP.Presenter.ARG_USERNAME, name);
-        activity.startActivity(intent);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(activity, avatarForTransition, AVATAR);
+
+        activity.startActivity(intent, options.toBundle());
     }
 
     private void onGetUsersList(GithubUsersSearch usersSearch, String searchString){

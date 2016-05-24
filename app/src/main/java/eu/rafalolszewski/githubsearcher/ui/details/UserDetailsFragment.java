@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -71,12 +72,25 @@ public class UserDetailsFragment extends Fragment implements UserDetailsVP.View{
     @Override
     @MainThread
     public void onGetUser(GithubUser user) {
-        Picasso.with(getActivity()).load(user.avatarUrl).into(avatar);
+
+        Picasso.with(getActivity()).load(user.avatarUrl).into(avatar, new Callback() {
+            @Override
+            public void onSuccess() {
+                presenter.onLoadedImage(true);
+            }
+
+            @Override
+            public void onError() {
+                presenter.onLoadedImage(false);
+            }
+        });
+
         loginTV.setText(user.login);
         nameTV.setText(user.name);
         emailTV.setText(user.email);
         followersTV.setText(String.valueOf(user.followers));
         reposTV.setText(String.valueOf(user.publicRepos));
+
     }
 
     @Override

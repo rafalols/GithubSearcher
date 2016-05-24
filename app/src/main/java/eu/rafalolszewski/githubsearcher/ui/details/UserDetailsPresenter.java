@@ -38,6 +38,11 @@ public class UserDetailsPresenter implements UserDetailsVP.Presenter {
                 .subscribe(u -> onGetUser(u));
     }
 
+    @Override
+    public void onLoadedImage(boolean succedd) {
+        activity.whenImageIsLoaded();
+    }
+
     private void onGetUser(GithubUser user) {
         Log.i(TAG, "onGetUser: ");
         this.user = user;

@@ -23,7 +23,7 @@ public interface UserListVP {
 
         void getUserList(String searchString);
 
-        void clickUser(String name);
+        void clickUser(String name, android.view.View avatarForTransition);
     }
 
 }

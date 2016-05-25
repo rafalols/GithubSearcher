@@ -21,7 +21,7 @@ import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
 import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsActivity;
 import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsVP;
 import eu.rafalolszewski.githubsearcher.ui.search.SearchVP;
-import rx.android.schedulers.AndroidSchedulers;
+import rx.Scheduler;
 
 /**
  * Created by rafal on 02.05.16.
@@ -36,16 +36,18 @@ public class UserListPresenter implements UserListVP.Presenter {
     private UserListActivity activity;
     private UserListVP.View view;
     private HistoryDao historyDao;
+    private Scheduler observeOnScheduler;
 
     private GitHubApi gitHubApi;
 
     private GithubUsersSearch cashedUserSearch;
     private Map<String, GithubUser> cashedUsersDetails;
 
-    public UserListPresenter(UserListActivity userListActivity, UserListVP.View view, HistoryDao historyDao) {
+    public UserListPresenter(UserListActivity userListActivity, UserListVP.View view, HistoryDao historyDao, Scheduler observeOnScheduler) {
         this.activity = userListActivity;
         this.view = view;
         this.historyDao = historyDao;
+        this.observeOnScheduler = observeOnScheduler;
 
         cashedUsersDetails = new HashMap<>();
 
@@ -59,7 +61,7 @@ public class UserListPresenter implements UserListVP.Presenter {
         }else{
             view.setProgressIndicator(true);
             gitHubApi.searchForUsers(searchString)
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .observeOn(observeOnScheduler)
                     .subscribe(userList -> onGetUsersList(userList, searchString),
                             err -> onApiError(err));
         }

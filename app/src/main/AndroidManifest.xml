@@ -22,10 +22,14 @@
 
         <activity
             android:name=".ui.users_list.UserListActivity"
-            android:parentActivityName=".ui.search.SearchActivity" />
+            android:parentActivityName=".ui.search.SearchActivity"
+            android:launchMode="singleTop"/>
 
         <activity
-            android:name=".ui.details.UserDetailsActivity" />
+            android:name=".ui.details.UserDetailsActivity"
+            android:parentActivityName=".ui.users_list.UserListActivity"
+            android:launchMode="singleTop"
+            />
 
     </application>
 

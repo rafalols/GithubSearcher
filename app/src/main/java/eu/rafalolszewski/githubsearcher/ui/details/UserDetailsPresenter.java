@@ -1,13 +1,12 @@
 package eu.rafalolszewski.githubsearcher.ui.details;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import org.parceler.Parcels;
 
 import eu.rafalolszewski.githubsearcher.api.GitHubApi;
 import eu.rafalolszewski.githubsearcher.model.GithubUser;
-import rx.android.schedulers.AndroidSchedulers;
+import rx.Scheduler;
 
 /**
  * Created by rafal on 23.05.16.
@@ -19,22 +18,24 @@ public class UserDetailsPresenter implements UserDetailsVP.Presenter {
 
     private UserDetailsActivity activity;
     private UserDetailsVP.View view;
+    private Scheduler observeOnScheduler;
 
     private GitHubApi gitHubApi;
 
     private GithubUser user;
 
-    public UserDetailsPresenter(UserDetailsActivity activity, UserDetailsVP.View view) {
+    public UserDetailsPresenter(UserDetailsActivity activity, UserDetailsVP.View view, Scheduler observeOnScheduler) {
         this.activity = activity;
         this.view = view;
+        this.observeOnScheduler = observeOnScheduler;
 
         gitHubApi = activity.getApi();
     }
 
     @Override
-    public void getUserByName(String name) {
-        gitHubApi.getUser(name)
-                .observeOn(AndroidSchedulers.mainThread())
+    public void getUserByLogin(String login) {
+        gitHubApi.getUser(login)
+                .observeOn(observeOnScheduler)
                 .subscribe(u -> onGetUser(u));
     }
 
@@ -44,7 +45,6 @@ public class UserDetailsPresenter implements UserDetailsVP.Presenter {
     }
 
     private void onGetUser(GithubUser user) {
-        Log.i(TAG, "onGetUser: ");
         this.user = user;
         view.onGetUser(user);
         view.setProgressIndicator(false);
@@ -59,7 +59,7 @@ public class UserDetailsPresenter implements UserDetailsVP.Presenter {
             onGetUser(user);
         }else if (activity.getIntent().hasExtra(ARG_USERNAME)){
             String name = activity.getIntent().getStringExtra(ARG_USERNAME);
-            getUserByName(name);
+            getUserByLogin(name);
         }
     }
 

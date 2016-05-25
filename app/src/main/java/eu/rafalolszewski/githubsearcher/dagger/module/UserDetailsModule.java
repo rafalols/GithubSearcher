@@ -6,6 +6,7 @@ import eu.rafalolszewski.githubsearcher.dagger.scope.PerUserDetailsActivity;
 import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsActivity;
 import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsPresenter;
 import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsVP;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by rafal on 23.05.16.
@@ -24,7 +25,7 @@ public class UserDetailsModule {
     @Provides
     @PerUserDetailsActivity
     UserDetailsVP.Presenter providesUserDetailsPresenter(){
-        return new UserDetailsPresenter(activity, view);
+        return new UserDetailsPresenter(activity, view, AndroidSchedulers.mainThread());
     }
 
 }

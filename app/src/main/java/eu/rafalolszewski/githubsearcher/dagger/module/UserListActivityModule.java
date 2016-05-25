@@ -8,6 +8,7 @@ import eu.rafalolszewski.githubsearcher.ui.users_list.UserListActivity;
 import eu.rafalolszewski.githubsearcher.ui.users_list.UserListAdapter;
 import eu.rafalolszewski.githubsearcher.ui.users_list.UserListPresenter;
 import eu.rafalolszewski.githubsearcher.ui.users_list.UserListVP;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by rafal on 02.05.16.
@@ -26,7 +27,7 @@ public class UserListActivityModule {
     @Provides
     @PerUserListActivity
     UserListVP.Presenter providesUserListPresenter(HistoryDaoImpl historyDao){
-        return new UserListPresenter(userListActivity, userListView, historyDao);
+        return new UserListPresenter(userListActivity, userListView, historyDao, AndroidSchedulers.mainThread());
     }
 
     @Provides

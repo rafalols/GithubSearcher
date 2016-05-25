@@ -8,8 +8,8 @@ import rx.Observable;
  */
 public interface HistoryDao {
 
-    public Observable<SearchHistory> getHistory();
+    Observable<SearchHistory> getHistory();
 
-    public void putSearchToHistory(String searchString, int numberOfResults);
+    void putSearchToHistory(String searchString, int numberOfResults);
 
 }

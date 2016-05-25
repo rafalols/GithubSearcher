@@ -22,7 +22,7 @@ public interface UserDetailsVP {
 
         public static final String ARG_USERNAME = "username";
 
-        void getUserByName(String userId);
+        void getUserByLogin(String userId);
 
         void onLoadedImage(boolean succedd);
     }

@@ -3,11 +3,14 @@ package eu.rafalolszewski.githubsearcher.ui.search;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -34,6 +37,11 @@ public class SearchFragment extends Fragment implements SearchVP.View {
         presenter.search(searchText.getText().toString());
     }
 
+//    @OnEditorAction(R.id.edittext_searcher) boolean onEditorAction(KeyEvent key) {
+//
+//        return true;
+//    }
+
     @Inject
     SearchVP.Presenter presenter;
 
@@ -52,6 +60,18 @@ public class SearchFragment extends Fragment implements SearchVP.View {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         ButterKnife.bind(this, view);
+
+        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEARCH){
+                    presenter.search(searchText.getText().toString());
+                    handled = true;
+                }
+                return handled;
+            }
+        });
 
         return view;
     }

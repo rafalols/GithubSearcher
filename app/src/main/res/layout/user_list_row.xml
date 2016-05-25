@@ -13,9 +13,8 @@
         <TextView
             android:id="@+id/login"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:layout_marginLeft="32dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:transitionName="login"
+            style="@style/login_value"
+            />
 
 </LinearLayout>

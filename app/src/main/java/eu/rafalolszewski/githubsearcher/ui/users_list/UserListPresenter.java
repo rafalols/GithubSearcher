@@ -3,6 +3,7 @@ package eu.rafalolszewski.githubsearcher.ui.users_list;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class UserListPresenter implements UserListVP.Presenter {
     private static final String TAG = "UserListPresenter";
     private static final String SEARCH_RESULT = "searchResults";
     private static final String AVATAR = "avatar";
+    private static final String LOGIN = "login";
 
     private UserListActivity activity;
     private UserListVP.View view;
@@ -69,12 +71,15 @@ public class UserListPresenter implements UserListVP.Presenter {
     }
 
     @Override
-    public void clickUser(String name, View avatarForTransition) {
+    public void clickUser(String name, View avatarForTransition, View loginForTransition) {
         Intent intent = new Intent(activity, UserDetailsActivity.class);
         intent.putExtra(UserDetailsVP.Presenter.ARG_USERNAME, name);
 
+        Pair<View, String> p1 = Pair.create(avatarForTransition, AVATAR);
+        Pair<View, String> p2 = Pair.create(loginForTransition, LOGIN);
+
         ActivityOptionsCompat options = ActivityOptionsCompat.
-                makeSceneTransitionAnimation(activity, avatarForTransition, AVATAR);
+                makeSceneTransitionAnimation(activity, p1, p2);
 
         activity.startActivity(intent, options.toBundle());
     }

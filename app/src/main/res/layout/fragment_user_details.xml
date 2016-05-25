@@ -20,14 +20,12 @@
             tools:src="@drawable/abc_ab_share_pack_mtrl_alpha"
             />
 
-        <TextView
-            style="@style/label"
-            android:text="@string/label_user_login"
-            />
 
         <TextView
             android:id="@+id/login"
-            style="@style/value"
+            android:layout_gravity="center_horizontal"
+            android:transitionName="login"
+            style="@style/login_value"
             tools:text="UserName123"
             />
 

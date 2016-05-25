@@ -52,4 +52,10 @@ public class UserDetailsActivity extends BaseActivity {
             startPostponedEnterTransition();
         }
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        presenter.onSave(outState);
+        super.onSaveInstanceState(outState);
+    }
 }

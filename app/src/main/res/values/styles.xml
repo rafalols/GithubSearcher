@@ -18,10 +18,11 @@
     </style>
 
     <style name="label">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/label_margin</item>
+        <item name="android:textColor">@color/label_color</item>
     </style>
 
     <style name="value">
@@ -30,6 +31,11 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">@dimen/value_margin_side</item>
         <item name="android:layout_marginRight">@dimen/value_margin_side</item>
+        <item name="android:textColor">@color/value_color</item>
+    </style>
+
+    <style name="login_value" parent="value">
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="user_list_label">

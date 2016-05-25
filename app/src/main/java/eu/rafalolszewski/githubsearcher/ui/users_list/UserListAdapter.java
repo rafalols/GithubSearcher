@@ -41,8 +41,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         if (usersList != null) {
             UserPreview user = usersList.usersPreviews.get(position);
             Picasso.with(context).load(user.avatarUrl).into(holder.avatar);
-            holder.name.setText(user.login);
-            holder.itemView.setOnClickListener(new OnItemClickListener(user.login, holder.avatar));
+            holder.login.setText(user.login);
+            holder.itemView.setOnClickListener(new OnItemClickListener(user.login, holder.avatar, holder.login));
         }
     }
 
@@ -60,28 +60,30 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView avatar;
-        public TextView name;
+        public TextView login;
 
         public ViewHolder(View itemView) {
             super(itemView);
             avatar = (ImageView) itemView.findViewById(R.id.avatar);
-            name = (TextView) itemView.findViewById(R.id.login);
+            login = (TextView) itemView.findViewById(R.id.login);
         }
     }
 
     public class OnItemClickListener implements View.OnClickListener{
 
-        String userName;
-        View viewForTransaction;
+        private String userName;
+        private View avatarForTransition;
+        private View loginForTransition;
 
-        public OnItemClickListener(String userName, View viewForTransaction) {
+        public OnItemClickListener(String userName, View avatarForTransition, View loginForTransition) {
             this.userName = userName;
-            this.viewForTransaction = viewForTransaction;
+            this.avatarForTransition = avatarForTransition;
+            this.loginForTransition = loginForTransition;
         }
 
         @Override
         public void onClick(View v) {
-            presenter.clickUser(userName, viewForTransaction);
+            presenter.clickUser(userName, avatarForTransition, loginForTransition);
         }
     }
 

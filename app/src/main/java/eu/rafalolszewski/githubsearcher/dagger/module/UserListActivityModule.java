@@ -1,5 +1,7 @@
 package eu.rafalolszewski.githubsearcher.dagger.module;
 
+import android.support.test.espresso.idling.CountingIdlingResource;
+
 import dagger.Module;
 import dagger.Provides;
 import eu.rafalolszewski.githubsearcher.dagger.scope.PerUserListActivity;
@@ -26,8 +28,8 @@ public class UserListActivityModule {
 
     @Provides
     @PerUserListActivity
-    UserListVP.Presenter providesUserListPresenter(HistoryDaoImpl historyDao){
-        return new UserListPresenter(userListActivity, userListView, historyDao, AndroidSchedulers.mainThread());
+    UserListVP.Presenter providesUserListPresenter(HistoryDaoImpl historyDao, CountingIdlingResource idlingResource){
+        return new UserListPresenter(userListActivity, userListView, historyDao, AndroidSchedulers.mainThread(), idlingResource);
     }
 
     @Provides

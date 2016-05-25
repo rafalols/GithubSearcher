@@ -1,5 +1,7 @@
 package eu.rafalolszewski.githubsearcher.dagger.module;
 
+import android.support.test.espresso.idling.CountingIdlingResource;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -46,6 +48,12 @@ public class ApplicationModule {
     @Provides
     HistoryDaoImpl providesHistoryDaoImpl(Realm realm){
         return new HistoryDaoImpl(realm);
+    }
+
+    @Singleton
+    @Provides
+    CountingIdlingResource providesIdlingResource(){
+        return new CountingIdlingResource("AppIdlingResource");
     }
 
 }

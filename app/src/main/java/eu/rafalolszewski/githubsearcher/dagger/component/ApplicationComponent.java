@@ -1,5 +1,7 @@
 package eu.rafalolszewski.githubsearcher.dagger.component;
 
+import android.support.test.espresso.idling.CountingIdlingResource;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -17,5 +19,7 @@ public interface ApplicationComponent {
     GitHubSearcherApplication application();
 
     HistoryDaoImpl historyDaoImpl();
+
+    CountingIdlingResource countingIdlingResource();
 
 }

@@ -2,6 +2,7 @@ package eu.rafalolszewski.githubsearcher.ui.users_list;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.util.Log;
@@ -43,11 +44,15 @@ public class UserListPresenter implements UserListVP.Presenter {
     private GithubUsersSearch cashedUserSearch;
     private Map<String, GithubUser> cashedUsersDetails;
 
-    public UserListPresenter(UserListActivity userListActivity, UserListVP.View view, HistoryDao historyDao, Scheduler observeOnScheduler) {
+    CountingIdlingResource countingIdlingResource;
+
+    public UserListPresenter(UserListActivity userListActivity, UserListVP.View view,
+                             HistoryDao historyDao, Scheduler observeOnScheduler, CountingIdlingResource countingIdlingResource) {
         this.activity = userListActivity;
         this.view = view;
         this.historyDao = historyDao;
         this.observeOnScheduler = observeOnScheduler;
+        this.countingIdlingResource = countingIdlingResource;
 
         cashedUsersDetails = new HashMap<>();
 
@@ -56,6 +61,8 @@ public class UserListPresenter implements UserListVP.Presenter {
 
     @Override
     public void getUserList(String searchString) {
+        countingIdlingResource.increment();
+
         if (gitHubApi == null){
             toast(activity.getString(R.string.wait_for_api));
         }else{
@@ -90,6 +97,7 @@ public class UserListPresenter implements UserListVP.Presenter {
         historyDao.putSearchToHistory(searchString, usersSearch.count);
         view.setProgressIndicator(false);
         view.onGetUsersList(usersSearch);
+        countingIdlingResource.decrement();
     }
 
     private void toast(String errorString) {

@@ -33,7 +33,7 @@ public class HistoryAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public SearchHistory getItem(int position) {
         return searchHistoryList.get(position);
     }
 

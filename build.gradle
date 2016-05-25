@@ -27,3 +27,9 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+ext {
+    supportLibraryVersion = '23.4.0'
+    espressoVersion = '2.2.2'
+}

@@ -34,6 +34,9 @@ public class UserListFragment extends Fragment implements UserListVP.View{
     @Bind(R.id.progressbar)
     ProgressBar progressBar;
 
+    @Bind(R.id.error)
+    TextView errorTextView;
+
     RecyclerView.LayoutManager rwLayoutManager;
 
     @Inject
@@ -85,7 +88,7 @@ public class UserListFragment extends Fragment implements UserListVP.View{
 
     @Override
     public void setLoadDataError(Throwable t) {
-
+        errorTextView.setVisibility(View.VISIBLE);
     }
 
 }

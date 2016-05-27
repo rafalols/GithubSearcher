@@ -35,7 +35,10 @@ public class HistoryDaoImpl implements HistoryDao {
         search.setSearchString(searchString);
         search.setSearchDate(getCurrentDate());
         search.setNumberOfResults(numberOfResults);
+        copyOrUpdateToRealm(search);
+    }
 
+    private void copyOrUpdateToRealm(SearchHistory search) {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(search);
         realm.commitTransaction();

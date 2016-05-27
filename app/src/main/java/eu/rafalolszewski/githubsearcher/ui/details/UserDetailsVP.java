@@ -16,6 +16,8 @@ public interface UserDetailsVP {
         void setProgressIndicator(boolean enabled);
 
         void animateFabButton();
+
+        void setLoadDataError(Throwable t);
     }
 
     interface Presenter extends BasePresenter{

@@ -33,4 +33,13 @@
         android:visibility="invisible"
         />
 
+    <TextView
+        android:id="@+id/error"
+        android:text="@string/api_error"
+        android:gravity="center"
+        android:textSize="@dimen/error_message_size"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </RelativeLayout>

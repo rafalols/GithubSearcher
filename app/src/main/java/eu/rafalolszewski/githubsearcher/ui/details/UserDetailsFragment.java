@@ -56,6 +56,9 @@ public class UserDetailsFragment extends Fragment implements UserDetailsVP.View{
     @Bind(R.id.fab)
     FloatingActionButton fab;
 
+    @Bind(R.id.error)
+    TextView errorTV;
+
     @Inject
     UserDetailsVP.Presenter presenter;
 
@@ -114,6 +117,11 @@ public class UserDetailsFragment extends Fragment implements UserDetailsVP.View{
         fab.setVisibility(View.VISIBLE);
         Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.from_bottom);
         fab.startAnimation(anim);
+    }
+
+    @Override
+    public void setLoadDataError(Throwable t) {
+        errorTV.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.fab)

@@ -11,18 +11,15 @@ import android.widget.Toast;
 
 import org.parceler.Parcels;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.api.GitHubApi;
 import eu.rafalolszewski.githubsearcher.dao.HistoryDao;
-import eu.rafalolszewski.githubsearcher.model.GithubUser;
 import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
 import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsActivity;
 import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsVP;
 import eu.rafalolszewski.githubsearcher.ui.search.SearchVP;
 import rx.Scheduler;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by rafal on 02.05.16.
@@ -42,7 +39,6 @@ public class UserListPresenter implements UserListVP.Presenter {
     private GitHubApi gitHubApi;
 
     private GithubUsersSearch cashedUserSearch;
-    private Map<String, GithubUser> cashedUsersDetails;
 
     CountingIdlingResource countingIdlingResource;
 
@@ -53,8 +49,6 @@ public class UserListPresenter implements UserListVP.Presenter {
         this.historyDao = historyDao;
         this.observeOnScheduler = observeOnScheduler;
         this.countingIdlingResource = countingIdlingResource;
-
-        cashedUsersDetails = new HashMap<>();
 
         gitHubApi = userListActivity.getApi();
     }
@@ -68,15 +62,17 @@ public class UserListPresenter implements UserListVP.Presenter {
         }else{
             view.setProgressIndicator(true);
             gitHubApi.searchForUsers(searchString)
+                    .subscribeOn(Schedulers.newThread())
                     .observeOn(observeOnScheduler)
-                    .subscribe(userList -> onGetUsersList(userList, searchString),
-                            err -> onApiError(err));
+                    .doOnNext(userList -> onGetUsersList(userList, searchString))
+                    .doOnError(er -> onApiError(er))
+                    .subscribe();
         }
     }
 
     private void onApiError(Throwable e) {
-        toast(activity.getString(R.string.api_error));
-        Log.e(TAG, "onError: ", e);
+        view.setLoadDataError(e);
+        Log.e(TAG, "onApiError: ", e);
     }
 
     @Override

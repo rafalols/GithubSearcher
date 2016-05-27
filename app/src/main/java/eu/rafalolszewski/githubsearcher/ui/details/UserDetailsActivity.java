@@ -2,6 +2,7 @@ package eu.rafalolszewski.githubsearcher.ui.details;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.transition.Transition;
 
 import javax.inject.Inject;
 
@@ -32,6 +33,8 @@ public class UserDetailsActivity extends BaseActivity {
         component.inject(fragment);
 
         presenter.onCreate(savedInstanceState);
+
+        setTransitionListener();
     }
 
     private void initComponent(UserDetailsVP.View detailsView) {
@@ -57,5 +60,38 @@ public class UserDetailsActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
         presenter.onSave(outState);
         super.onSaveInstanceState(outState);
+    }
+
+    private void setTransitionListener() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionStart(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionEnd(Transition transition) {
+                    presenter.onTransitionFinished();
+                }
+
+                @Override
+                public void onTransitionCancel(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionPause(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionResume(Transition transition) {
+
+                }
+            });
+        }else {
+            presenter.onTransitionFinished();
+        }
     }
 }

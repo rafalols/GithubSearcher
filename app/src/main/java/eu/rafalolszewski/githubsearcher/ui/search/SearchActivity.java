@@ -29,7 +29,7 @@ public class SearchActivity extends BaseActivity {
         component.inject(this);
 
         component.inject(searchFragment);
-        searchFragment.onInjectDependencies();
+        searchFragment.setupAdapter();
     }
 
     private void initComponent(SearchVP.View searchView){

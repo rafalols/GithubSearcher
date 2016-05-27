@@ -21,9 +21,7 @@ import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.model.SearchHistory;
 import rx.Observable;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class SearchFragment extends Fragment implements SearchVP.View {
 
     @Bind(R.id.edittext_searcher)
@@ -36,11 +34,6 @@ public class SearchFragment extends Fragment implements SearchVP.View {
     public void search(){
         presenter.search(searchText.getText().toString());
     }
-
-//    @OnEditorAction(R.id.edittext_searcher) boolean onEditorAction(KeyEvent key) {
-//
-//        return true;
-//    }
 
     @Inject
     SearchVP.Presenter presenter;
@@ -89,7 +82,7 @@ public class SearchFragment extends Fragment implements SearchVP.View {
     }
 
     @Override
-    public void onInjectDependencies() {
+    public void setupAdapter() {
         historyListView.setAdapter(historyAdapter);
     }
 }

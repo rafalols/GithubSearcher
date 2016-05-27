@@ -77,11 +77,7 @@ public class UserListFragment extends Fragment implements UserListVP.View{
     }
 
     @Override
-    public void onInjectDependencies() {
-        setupRecyclerView();
-    }
-
-    private void setupRecyclerView() {
+    public void setupRecyclerView() {
         rwLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(rwLayoutManager);
         recyclerView.setAdapter(rwAdapter);

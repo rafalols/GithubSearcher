@@ -3,10 +3,13 @@ package eu.rafalolszewski.githubsearcher.ui.details;
 
 import android.os.Bundle;
 import android.support.annotation.MainThread;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,6 +21,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.model.GithubUser;
 
@@ -48,6 +52,9 @@ public class UserDetailsFragment extends Fragment implements UserDetailsVP.View{
 
     @Bind(R.id.progressbar)
     ProgressBar progressBar;
+
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
 
     @Inject
     UserDetailsVP.Presenter presenter;
@@ -103,7 +110,15 @@ public class UserDetailsFragment extends Fragment implements UserDetailsVP.View{
     }
 
     @Override
-    public void onInjectDependencies() {
-
+    public void animateFabButton() {
+        fab.setVisibility(View.VISIBLE);
+        Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.from_bottom);
+        fab.startAnimation(anim);
     }
+
+    @OnClick(R.id.fab)
+    public void clickFab(){
+        presenter.openUserProfile();
+    }
+
 }

@@ -1,9 +1,12 @@
 package eu.rafalolszewski.githubsearcher.ui.details;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import org.parceler.Parcels;
 
+import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.api.GitHubApi;
 import eu.rafalolszewski.githubsearcher.model.GithubUser;
 import rx.Scheduler;
@@ -15,6 +18,7 @@ import rx.Scheduler;
 public class UserDetailsPresenter implements UserDetailsVP.Presenter {
 
     private static final String TAG = "UserDetailsPresenter";
+
 
     private UserDetailsActivity activity;
     private UserDetailsVP.View view;
@@ -44,10 +48,24 @@ public class UserDetailsPresenter implements UserDetailsVP.Presenter {
         activity.whenImageIsLoaded();
     }
 
+    @Override
+    public void onTransitionFinished() {
+        view.animateFabButton();
+    }
+
+    @Override
+    public void openUserProfile() {
+        String url = activity.getString(R.string.github_url) + user.login;
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        activity.startActivity(intent);
+    }
+
     private void onGetUser(GithubUser user) {
         this.user = user;
         view.onGetUser(user);
         view.setProgressIndicator(false);
+
     }
 
 

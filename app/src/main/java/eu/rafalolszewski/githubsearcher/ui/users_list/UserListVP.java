@@ -2,7 +2,6 @@ package eu.rafalolszewski.githubsearcher.ui.users_list;
 
 import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
 import eu.rafalolszewski.githubsearcher.ui.base.BasePresenter;
-import eu.rafalolszewski.githubsearcher.ui.base.BaseView;
 
 /**
  * Created by rafal on 23.05.16.
@@ -10,13 +9,15 @@ import eu.rafalolszewski.githubsearcher.ui.base.BaseView;
 
 public interface UserListVP {
 
-    interface View extends BaseView{
+    interface View{
 
         void onGetUsersList(GithubUsersSearch usersList);
 
         void setProgressIndicator(boolean enabled);
 
         void setLoadDataError(Throwable t);
+
+        void setupRecyclerView();
     }
 
     interface Presenter extends BasePresenter{

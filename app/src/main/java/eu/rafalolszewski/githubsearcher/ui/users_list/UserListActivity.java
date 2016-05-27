@@ -29,7 +29,7 @@ public class UserListActivity extends BaseActivity {
         initComponent(userListFragment);
 
         component.inject(userListFragment);
-        userListFragment.onInjectDependencies();
+        userListFragment.setupRecyclerView();
 
         component.inject(this);
 

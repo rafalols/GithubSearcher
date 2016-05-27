@@ -1,7 +1,6 @@
 package eu.rafalolszewski.githubsearcher.ui.search;
 
 import eu.rafalolszewski.githubsearcher.model.SearchHistory;
-import eu.rafalolszewski.githubsearcher.ui.base.BaseView;
 import eu.rafalolszewski.githubsearcher.ui.base.BasePresenter;
 import rx.Observable;
 
@@ -21,9 +20,11 @@ public interface SearchVP {
 
     }
 
-    interface View extends BaseView {
+    interface View {
 
         void refreshHistory(Observable<SearchHistory> searchHistory);
+
+        void setupAdapter();
 
     }
 

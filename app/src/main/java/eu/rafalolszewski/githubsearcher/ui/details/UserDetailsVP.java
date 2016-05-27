@@ -2,7 +2,6 @@ package eu.rafalolszewski.githubsearcher.ui.details;
 
 import eu.rafalolszewski.githubsearcher.model.GithubUser;
 import eu.rafalolszewski.githubsearcher.ui.base.BasePresenter;
-import eu.rafalolszewski.githubsearcher.ui.base.BaseView;
 
 /**
  * Created by rafal on 23.05.16.
@@ -10,12 +9,13 @@ import eu.rafalolszewski.githubsearcher.ui.base.BaseView;
 
 public interface UserDetailsVP {
 
-    interface View extends BaseView{
+    interface View {
 
         void onGetUser(GithubUser user);
 
         void setProgressIndicator(boolean enabled);
 
+        void animateFabButton();
     }
 
     interface Presenter extends BasePresenter{
@@ -25,6 +25,10 @@ public interface UserDetailsVP {
         void getUserByLogin(String userId);
 
         void onLoadedImage(boolean succedd);
+
+        void onTransitionFinished();
+
+        void openUserProfile();
     }
 
 }

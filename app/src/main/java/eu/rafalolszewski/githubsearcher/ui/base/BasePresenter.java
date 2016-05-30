@@ -7,8 +7,8 @@ import android.os.Bundle;
  */
 public interface BasePresenter {
 
-    void onCreate(Bundle savedInstanceState);
+    void onRestoreInstance(Bundle savedInstanceState);
 
-    void onSave(Bundle outState);
+    void onSaveInstance(Bundle outState);
 
 }

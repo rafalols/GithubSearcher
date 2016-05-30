@@ -17,7 +17,6 @@ import eu.rafalolszewski.githubsearcher.dao.HistoryDao;
 import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
 import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsActivity;
 import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsVP;
-import eu.rafalolszewski.githubsearcher.ui.search.SearchVP;
 import rx.Scheduler;
 import rx.schedulers.Schedulers;
 
@@ -27,7 +26,6 @@ import rx.schedulers.Schedulers;
 public class UserListPresenter implements UserListVP.Presenter {
 
     private static final String TAG = "UserListPresenter";
-    private static final String SEARCH_RESULT = "searchResults";
     private static final String AVATAR = "avatar";
     private static final String LOGIN = "login";
 
@@ -62,17 +60,17 @@ public class UserListPresenter implements UserListVP.Presenter {
         }else{
             view.setProgressIndicator(true);
             gitHubApi.searchForUsers(searchString)
-                    .subscribeOn(Schedulers.newThread())
+                    .subscribeOn(Schedulers.io())
                     .observeOn(observeOnScheduler)
                     .doOnNext(userList -> onGetUsersList(userList, searchString))
-                    .doOnError(er -> onApiError(er))
+                    .doOnError(er -> onApiError(searchString, er))
                     .subscribe();
         }
     }
 
-    private void onApiError(Throwable e) {
+    private void onApiError(String searchString, Throwable e) {
         view.setLoadDataError(e);
-        Log.e(TAG, "onApiError: ", e);
+        Log.e(TAG, "onApiError: for string: " + searchString, e);
     }
 
     @Override
@@ -102,18 +100,13 @@ public class UserListPresenter implements UserListVP.Presenter {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        if (savedInstanceState != null && savedInstanceState.containsKey(SEARCH_RESULT)){
-            cashedUserSearch = Parcels.unwrap(savedInstanceState.getParcelable(SEARCH_RESULT));
-            view.onGetUsersList(cashedUserSearch);
-        }else if (activity.getIntent().hasExtra(SearchVP.Presenter.SEARCH_STRING)){
-            String searchString = activity.getIntent().getStringExtra(SearchVP.Presenter.SEARCH_STRING);
-            getUserList(searchString);
-        }
+    public void onRestoreInstance(Bundle savedInstanceState) {
+        cashedUserSearch = Parcels.unwrap(savedInstanceState.getParcelable(SEARCH_RESULT));
+        view.onGetUsersList(cashedUserSearch);
     }
 
     @Override
-    public void onSave(Bundle outState) {
+    public void onSaveInstance(Bundle outState) {
         if (cashedUserSearch != null) {
             outState.putParcelable(SEARCH_RESULT, Parcels.wrap(cashedUserSearch));
         }

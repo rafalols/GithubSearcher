@@ -22,6 +22,8 @@ public interface UserListVP {
 
     interface Presenter extends BasePresenter{
 
+        public static final String SEARCH_RESULT = "searchResults";
+
         void getUserList(String searchString);
 
         void clickUser(String name, android.view.View avatarForTransition, android.view.View loginForTransition);

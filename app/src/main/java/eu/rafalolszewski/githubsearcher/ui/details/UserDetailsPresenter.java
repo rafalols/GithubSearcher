@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.parceler.Parcels;
 
@@ -40,12 +41,17 @@ public class UserDetailsPresenter implements UserDetailsVP.Presenter {
 
     @Override
     public void getUserByLogin(String login) {
-        gitHubApi.getUser(login)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(observeOnScheduler)
-                .doOnNext(u -> onGetUser(u))
-                .doOnError(e -> onApiError(e))
-                .subscribe();
+        if (gitHubApi == null){
+            toast(activity.getString(R.string.wait_for_api));
+        }else {
+            view.setProgressIndicator(true);
+            gitHubApi.getUser(login)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(observeOnScheduler)
+                    .doOnNext(u -> sendUserToView(u))
+                    .doOnError(e -> onApiError(e))
+                    .subscribe();
+        }
     }
 
     private void onApiError(Throwable e) {
@@ -71,7 +77,7 @@ public class UserDetailsPresenter implements UserDetailsVP.Presenter {
         activity.startActivity(intent);
     }
 
-    private void onGetUser(GithubUser user) {
+    private void sendUserToView(GithubUser user) {
         this.user = user;
         view.onGetUser(user);
         view.setProgressIndicator(false);
@@ -79,20 +85,19 @@ public class UserDetailsPresenter implements UserDetailsVP.Presenter {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        view.setProgressIndicator(true);
-        if (savedInstanceState != null){
-            user = Parcels.unwrap(savedInstanceState.getParcelable(ARG_USERNAME));
-            onGetUser(user);
-        }else if (activity.getIntent().hasExtra(ARG_USERNAME)){
-            String name = activity.getIntent().getStringExtra(ARG_USERNAME);
-            getUserByLogin(name);
-        }
+    public void onRestoreInstance(Bundle savedInstanceState) {
+        user = Parcels.unwrap(savedInstanceState.getParcelable(ARG_USERNAME));
+        sendUserToView(user);
     }
 
     @Override
-    public void onSave(Bundle outState) {
+    public void onSaveInstance(Bundle outState) {
         outState.putParcelable(ARG_USERNAME, Parcels.wrap(user));
     }
+
+    private void toast(String errorString) {
+        Toast.makeText(activity, errorString, Toast.LENGTH_SHORT).show();
+    }
+
 
 }

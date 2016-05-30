@@ -18,6 +18,7 @@ import eu.rafalolszewski.githubsearcher.dagger.component.UserListActivityCompone
 import eu.rafalolszewski.githubsearcher.dagger.module.UserListActivityModule;
 import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
 import eu.rafalolszewski.githubsearcher.ui.base.BaseActivity;
+import eu.rafalolszewski.githubsearcher.ui.search.SearchPresenter;
 
 public class UserListActivity extends BaseActivity  implements UserListVP.View{
 
@@ -57,7 +58,12 @@ public class UserListActivity extends BaseActivity  implements UserListVP.View{
         component.inject(this);
         setupRecyclerView();
 
-        presenter.onCreate(savedInstanceState);
+        if (savedInstanceState != null && savedInstanceState.containsKey(UserListPresenter.SEARCH_RESULT)){
+            presenter.onRestoreInstance(savedInstanceState);
+        }else {
+            presenter.getUserList(getIntent().getStringExtra(SearchPresenter.SEARCH_STRING));
+        }
+
     }
 
     private void initComponent() {

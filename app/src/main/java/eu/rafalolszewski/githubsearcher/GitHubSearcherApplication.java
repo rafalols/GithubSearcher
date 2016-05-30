@@ -1,6 +1,7 @@
 package eu.rafalolszewski.githubsearcher;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
@@ -14,6 +15,8 @@ import eu.rafalolszewski.githubsearcher.dagger.component.DaggerApplicationCompon
 import eu.rafalolszewski.githubsearcher.dagger.component.DaggerApplicationProductionComponent;
 import eu.rafalolszewski.githubsearcher.dagger.module.ApiModule;
 import eu.rafalolszewski.githubsearcher.dagger.module.ApplicationModule;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by rafal on 02.05.16.
@@ -57,7 +60,7 @@ public class GitHubSearcherApplication extends Application {
 
                     @Override
                     public void onFailure(Throwable t) {
-
+                        Log.e(TAG, "initApi onFailure: ", t);
                     }
                 });
     }

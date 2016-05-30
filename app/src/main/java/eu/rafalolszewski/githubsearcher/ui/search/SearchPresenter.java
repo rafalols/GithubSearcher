@@ -42,7 +42,7 @@ public class SearchPresenter implements SearchVP.Presenter {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onRestoreInstance(Bundle savedInstanceState) {
         refreshHistory();
     }
 
@@ -51,7 +51,7 @@ public class SearchPresenter implements SearchVP.Presenter {
     }
 
     @Override
-    public void onSave(Bundle bundle) {
+    public void onSaveInstance(Bundle bundle) {
 
     }
 

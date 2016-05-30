@@ -72,7 +72,11 @@ public class UserDetailsActivity extends BaseActivity implements UserDetailsVP.V
         initComponent();
         component.inject(this);
 
-        presenter.onCreate(savedInstanceState);
+        if (savedInstanceState != null){
+            presenter.onRestoreInstance(savedInstanceState);
+        }else {
+            presenter.getUserByLogin(getIntent().getStringExtra(UserDetailsVP.Presenter.ARG_USERNAME));
+        }
 
         setTransitionListener();
     }
@@ -84,7 +88,7 @@ public class UserDetailsActivity extends BaseActivity implements UserDetailsVP.V
                 .build();
     }
 
-    public void waitForLoadImage(){
+    private void waitForLoadImage(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             postponeEnterTransition();
         }
@@ -98,7 +102,7 @@ public class UserDetailsActivity extends BaseActivity implements UserDetailsVP.V
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        presenter.onSave(outState);
+        presenter.onSaveInstance(outState);
         super.onSaveInstanceState(outState);
     }
 
@@ -106,29 +110,17 @@ public class UserDetailsActivity extends BaseActivity implements UserDetailsVP.V
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
                 @Override
-                public void onTransitionStart(Transition transition) {
-
-                }
-
+                public void onTransitionStart(Transition transition) {}
                 @Override
                 public void onTransitionEnd(Transition transition) {
                     presenter.onTransitionFinished();
                 }
-
                 @Override
-                public void onTransitionCancel(Transition transition) {
-
-                }
-
+                public void onTransitionCancel(Transition transition) {}
                 @Override
-                public void onTransitionPause(Transition transition) {
-
-                }
-
+                public void onTransitionPause(Transition transition) {}
                 @Override
-                public void onTransitionResume(Transition transition) {
-
-                }
+                public void onTransitionResume(Transition transition) {  }
             });
         }else {
             presenter.onTransitionFinished();
@@ -136,7 +128,7 @@ public class UserDetailsActivity extends BaseActivity implements UserDetailsVP.V
     }
 
     @OnClick(R.id.fab)
-    public void clickFab(){
+    void clickFab(){
         presenter.openUserProfile();
     }
 

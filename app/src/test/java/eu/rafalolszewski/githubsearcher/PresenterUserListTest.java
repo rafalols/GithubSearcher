@@ -56,7 +56,7 @@ public class PresenterUserListTest {
         setupSearch();
         when(activity.getApi()).thenReturn(gitHubApi);
         when(gitHubApi.searchForUsers(SEARCH_STRING)).thenReturn(Observable.just(userList));
-        presenter = new UserListPresenter(activity, view, historyDao, Schedulers.immediate());
+        presenter = new UserListPresenter(activity, view, historyDao, Schedulers.immediate(), null);
     }
 
     private void setupSearch() {

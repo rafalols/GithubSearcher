@@ -5,7 +5,6 @@ import eu.rafalolszewski.githubsearcher.dagger.module.SearchActivityModule;
 import eu.rafalolszewski.githubsearcher.dagger.scope.PerSearchActivity;
 import eu.rafalolszewski.githubsearcher.ui.search.HistoryAdapter;
 import eu.rafalolszewski.githubsearcher.ui.search.SearchActivity;
-import eu.rafalolszewski.githubsearcher.ui.search.SearchFragment;
 import eu.rafalolszewski.githubsearcher.ui.search.SearchVP;
 
 /**
@@ -18,8 +17,6 @@ public interface SearchActivityComponent {
     SearchVP.Presenter searchPresenter();
 
     HistoryAdapter historyAdapter();
-
-    void inject(SearchFragment searchFragment);
 
     void inject(SearchActivity searchActivity);
 

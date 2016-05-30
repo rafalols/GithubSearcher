@@ -4,7 +4,6 @@ import dagger.Component;
 import eu.rafalolszewski.githubsearcher.dagger.module.UserDetailsModule;
 import eu.rafalolszewski.githubsearcher.dagger.scope.PerUserDetailsActivity;
 import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsActivity;
-import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsFragment;
 import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsVP;
 
 /**
@@ -15,8 +14,6 @@ import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsVP;
 public interface UserDetailsComponent {
 
     UserDetailsVP.Presenter userDetailsPresenter();
-
-    void inject(UserDetailsFragment userDetailsFragment);
 
     void inject(UserDetailsActivity userDetailsActivity);
 }

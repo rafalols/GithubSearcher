@@ -24,8 +24,6 @@ public interface SearchVP {
 
         void refreshHistory(Observable<SearchHistory> searchHistory);
 
-        void setupAdapter();
-
     }
 
 }

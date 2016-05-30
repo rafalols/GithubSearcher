@@ -55,7 +55,7 @@ public class UserListPresenter implements UserListVP.Presenter {
 
     @Override
     public void getUserList(String searchString) {
-        countingIdlingResource.increment();
+        if (countingIdlingResource != null) countingIdlingResource.increment();
 
         if (gitHubApi == null){
             toast(activity.getString(R.string.wait_for_api));
@@ -93,7 +93,7 @@ public class UserListPresenter implements UserListVP.Presenter {
         historyDao.putSearchToHistory(searchString, usersSearch.count);
         view.setProgressIndicator(false);
         view.onGetUsersList(usersSearch);
-        countingIdlingResource.decrement();
+        if (countingIdlingResource != null) countingIdlingResource.decrement();
     }
 
     private void toast(String errorString) {

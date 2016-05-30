@@ -9,11 +9,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ui.users_list.UserListActivity">
 
-    <fragment
-        android:id="@+id/user_list_fragment"
-        android:name="eu.rafalolszewski.githubsearcher.ui.users_list.UserListFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/fragment_user_list" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/label_users"
+                android:text="@string/Users"
+                style="@style/label"/>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_user_list"
+                android:scrollbars="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_centerInParent="true"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:visibility="invisible"
+            />
+
+        <TextView
+            android:id="@+id/error"
+            android:text="@string/api_error"
+            android:gravity="center"
+            android:textSize="@dimen/error_message_size"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 </RelativeLayout>

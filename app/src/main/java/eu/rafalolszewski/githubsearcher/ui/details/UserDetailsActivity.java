@@ -2,19 +2,60 @@ package eu.rafalolszewski.githubsearcher.ui.details;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.transition.Transition;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.dagger.component.DaggerUserDetailsComponent;
 import eu.rafalolszewski.githubsearcher.dagger.component.UserDetailsComponent;
 import eu.rafalolszewski.githubsearcher.dagger.module.UserDetailsModule;
+import eu.rafalolszewski.githubsearcher.model.GithubUser;
 import eu.rafalolszewski.githubsearcher.ui.base.BaseActivity;
 
-public class UserDetailsActivity extends BaseActivity {
+public class UserDetailsActivity extends BaseActivity implements UserDetailsVP.View{
 
     UserDetailsComponent component;
+
+    @Bind(R.id.image)
+    ImageView avatar;
+
+    @Bind(R.id.login)
+    TextView loginTV;
+
+    @Bind(R.id.name)
+    TextView nameTV;
+
+    @Bind(R.id.email)
+    TextView emailTV;
+
+    @Bind(R.id.followers)
+    TextView followersTV;
+
+    @Bind(R.id.repos)
+    TextView reposTV;
+
+    @Bind(R.id.progressbar)
+    ProgressBar progressBar;
+
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
+
+    @Bind(R.id.error)
+    TextView errorTV;
 
     @Inject
     UserDetailsVP.Presenter presenter;
@@ -24,23 +65,22 @@ public class UserDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
 
+        ButterKnife.bind(this);
+
         waitForLoadImage();
 
-        UserDetailsFragment fragment = (UserDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.user_details_fragment);
-
-        initComponent(fragment);
+        initComponent();
         component.inject(this);
-        component.inject(fragment);
 
         presenter.onCreate(savedInstanceState);
 
         setTransitionListener();
     }
 
-    private void initComponent(UserDetailsVP.View detailsView) {
+    private void initComponent() {
         component = DaggerUserDetailsComponent.builder()
                 .applicationComponent(getAppComponent())
-                .userDetailsModule(new UserDetailsModule(this, detailsView))
+                .userDetailsModule(new UserDetailsModule(this, this))
                 .build();
     }
 
@@ -93,5 +133,54 @@ public class UserDetailsActivity extends BaseActivity {
         }else {
             presenter.onTransitionFinished();
         }
+    }
+
+    @OnClick(R.id.fab)
+    public void clickFab(){
+        presenter.openUserProfile();
+    }
+
+    @Override
+    public void onGetUser(GithubUser user) {
+
+        Picasso.with(this).load(user.avatarUrl).into(avatar, new Callback() {
+            @Override
+            public void onSuccess() {
+                presenter.onLoadedImage(true);
+            }
+
+            @Override
+            public void onError() {
+                presenter.onLoadedImage(false);
+            }
+        });
+
+        loginTV.setText(user.login);
+        nameTV.setText(user.name);
+        emailTV.setText(user.email);
+        followersTV.setText(String.valueOf(user.followers));
+        reposTV.setText(String.valueOf(user.publicRepos));
+
+    }
+
+    @Override
+    public void setProgressIndicator(boolean enabled) {
+        if (enabled){
+            progressBar.setVisibility(View.VISIBLE);
+        }else {
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void animateFabButton() {
+        fab.setVisibility(View.VISIBLE);
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.from_bottom);
+        fab.startAnimation(anim);
+    }
+
+    @Override
+    public void setLoadDataError(Throwable t) {
+        errorTV.setVisibility(View.VISIBLE);
     }
 }

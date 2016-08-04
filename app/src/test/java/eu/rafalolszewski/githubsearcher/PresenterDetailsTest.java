@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import eu.rafalolszewski.githubsearcher.api.GitHubApi;
-import eu.rafalolszewski.githubsearcher.model.GithubUser;
+import eu.rafalolszewski.githubsearcher.model.UserDetails;
 import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsActivity;
 import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsPresenter;
 import eu.rafalolszewski.githubsearcher.ui.details.UserDetailsVP;
@@ -36,7 +36,7 @@ public class PresenterDetailsTest {
     @Mock
     GitHubApi gitHubApi;
 
-    GithubUser user;
+    UserDetails user;
 
     @Before
     public void setup(){
@@ -48,7 +48,7 @@ public class PresenterDetailsTest {
     }
 
     private void setupUser() {
-        user = new GithubUser();
+        user = new UserDetails();
         user.login = LOGIN_STRING;
     }
 

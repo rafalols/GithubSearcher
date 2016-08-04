@@ -2,7 +2,8 @@ package eu.rafalolszewski.githubsearcher.api;
 
 import java.util.List;
 
-import eu.rafalolszewski.githubsearcher.model.GithubUser;
+import eu.rafalolszewski.githubsearcher.model.GithubRepoSearch;
+import eu.rafalolszewski.githubsearcher.model.UserDetails;
 import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
 import rx.Observable;
 
@@ -24,13 +25,17 @@ public class GitHubApi {
         return service.searchUsers(searchForUsers, PER_PAGE);
     }
 
-    public Observable<GithubUser> getUser(String userName){
+    public Observable<UserDetails> getUser(String userName){
         return service.getUser(userName);
     }
 
-    public Observable<GithubUser> getUsers(List<String> users) {
+    public Observable<UserDetails> getUsers(List<String> users) {
         return Observable.from(users)
                 .flatMap(user -> service.getUser(user));
+    }
+
+    public Observable<GithubRepoSearch> searchForRepos(String searchString){
+        return service.searchRepos(searchString);
     }
 
 }

@@ -14,11 +14,13 @@ public class SearchHistory extends RealmObject {
 
     public long searchDate;
 
-    public int numberOfResults;
+    public int numberOfUsers;
+
+    public int numberOfRepos;
 
 
 
-    //GENERATED GETTERS AND SETTERS
+//GENERATED GETTERS AND SETTERS
 
     public String getSearchString() {
         return searchString;
@@ -36,11 +38,19 @@ public class SearchHistory extends RealmObject {
         this.searchDate = searchDate;
     }
 
-    public int getNumberOfResults() {
-        return numberOfResults;
+    public int getNumberOfUsers() {
+        return numberOfUsers;
     }
 
-    public void setNumberOfResults(int numberOfResults) {
-        this.numberOfResults = numberOfResults;
+    public void setNumberOfUsers(int numberOfUsers) {
+        this.numberOfUsers = numberOfUsers;
+    }
+
+    public int getNumberOfRepos() {
+        return numberOfRepos;
+    }
+
+    public void setNumberOfRepos(int numberOfRepos) {
+        this.numberOfRepos = numberOfRepos;
     }
 }

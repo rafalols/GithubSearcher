@@ -1,6 +1,7 @@
 package eu.rafalolszewski.githubsearcher.api;
 
-import eu.rafalolszewski.githubsearcher.model.GithubUser;
+import eu.rafalolszewski.githubsearcher.model.GithubRepoSearch;
+import eu.rafalolszewski.githubsearcher.model.UserDetails;
 import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -13,7 +14,7 @@ import rx.Observable;
 public interface GitApiService {
 
     @GET("/users/{username}")
-    Observable<GithubUser> getUser(
+    Observable<UserDetails> getUser(
             @Path("username") String username
     );
 
@@ -21,6 +22,11 @@ public interface GitApiService {
     Observable<GithubUsersSearch> searchUsers(
             @Query("q") String q,
             @Query("per_page") int perPage
+    );
+
+    @GET("/search/repositories")
+    Observable<GithubRepoSearch> searchRepos(
+            @Query("q") String q
     );
 
 }

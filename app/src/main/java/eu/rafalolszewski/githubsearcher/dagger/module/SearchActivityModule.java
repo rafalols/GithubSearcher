@@ -1,5 +1,8 @@
 package eu.rafalolszewski.githubsearcher.dagger.module;
 
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.RecyclerView;
+
 import dagger.Module;
 import dagger.Provides;
 import eu.rafalolszewski.githubsearcher.dagger.scope.PerSearchActivity;
@@ -32,7 +35,17 @@ public class SearchActivityModule {
     @Provides
     @PerSearchActivity
     HistoryAdapter providesHistoryAdapter(SearchVP.Presenter presenter){
-        return new HistoryAdapter(searchActivity, presenter);
+        HistoryAdapter historyAdapter =  new HistoryAdapter(searchActivity, presenter);
+        historyAdapter.hasStableIds();
+        return historyAdapter;
+    }
+
+    @Provides
+    @PerSearchActivity
+    RecyclerView.ItemAnimator providesItemAnimator(){
+        RecyclerView.ItemAnimator animator = new DefaultItemAnimator();
+        animator.setMoveDuration(500);
+        return animator;
     }
 
 }

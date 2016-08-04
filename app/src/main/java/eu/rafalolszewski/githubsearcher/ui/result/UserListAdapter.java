@@ -1,4 +1,4 @@
-package eu.rafalolszewski.githubsearcher.ui.users_list;
+package eu.rafalolszewski.githubsearcher.ui.result;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -23,11 +23,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     private GithubUsersSearch usersList;
     private Context context;
-    private UserListVP.Presenter presenter;
+    private ResultVP.Presenter presenter;
 
     private int lastPosition = -1;
 
-    public UserListAdapter(Context context, UserListVP.Presenter presenter) {
+    public UserListAdapter(Context context, ResultVP.Presenter presenter) {
         this.context = context;
         this.presenter = presenter;
     }

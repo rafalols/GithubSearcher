@@ -1,6 +1,6 @@
 package eu.rafalolszewski.githubsearcher.ui.details;
 
-import eu.rafalolszewski.githubsearcher.model.GithubUser;
+import eu.rafalolszewski.githubsearcher.model.UserDetails;
 import eu.rafalolszewski.githubsearcher.ui.base.BasePresenter;
 
 /**
@@ -11,7 +11,7 @@ public interface UserDetailsVP {
 
     interface View {
 
-        void onGetUser(GithubUser user);
+        void onGetUser(UserDetails user);
 
         void setProgressIndicator(boolean enabled);
 

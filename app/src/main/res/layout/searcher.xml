@@ -3,26 +3,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:showIn="@layout/activity_search">
-
-
-        <TextView
-            android:id="@+id/label_searcher"
-            android:text="@string/label_searcher"
-            style="@style/label"/>
+    tools:showIn="@layout/activity_search"
+    android:paddingBottom="@dimen/searcher_vertical_margin"
+    android:paddingLeft="@dimen/searcher_horizontal_margin"
+    android:paddingRight="@dimen/searcher_horizontal_margin"
+    android:paddingTop="@dimen/searcher_vertical_margin"
+    android:background="@color/colorPrimaryDark"
+    >
 
         <EditText
             android:id="@+id/edittext_searcher"
-            android:layout_below="@+id/label_searcher"
             android:layout_toLeftOf="@+id/button_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionSearch"
+            android:textColor="#fff"
+            android:textColorHint="@color/unactiveColorOnDarkBackgroud"
+            android:hint="@string/label_searcher"
             android:inputType="text" />
 
         <ImageButton
             android:id="@+id/button_search"
-            android:src="@drawable/ic_search_black_48dp"
+            android:src="@drawable/ic_search_white_24dp"
+            android:padding="8dp"
             android:background="@null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

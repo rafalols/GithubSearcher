@@ -8,7 +8,7 @@ import org.parceler.Parcel;
  * Created by rafal on 02.05.16.
  */
 @Parcel
-public class GithubUser {
+public class UserDetails {
 
     public int id;
 

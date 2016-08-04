@@ -10,7 +10,7 @@ import org.parceler.Parcels;
 
 import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.api.GitHubApi;
-import eu.rafalolszewski.githubsearcher.model.GithubUser;
+import eu.rafalolszewski.githubsearcher.model.UserDetails;
 import rx.Scheduler;
 import rx.schedulers.Schedulers;
 
@@ -29,7 +29,7 @@ public class UserDetailsPresenter implements UserDetailsVP.Presenter {
 
     private GitHubApi gitHubApi;
 
-    private GithubUser user;
+    private UserDetails user;
 
     public UserDetailsPresenter(UserDetailsActivity activity, UserDetailsVP.View view, Scheduler observeOnScheduler) {
         this.activity = activity;
@@ -77,7 +77,7 @@ public class UserDetailsPresenter implements UserDetailsVP.Presenter {
         activity.startActivity(intent);
     }
 
-    private void sendUserToView(GithubUser user) {
+    private void sendUserToView(UserDetails user) {
         this.user = user;
         view.onGetUser(user);
         view.setProgressIndicator(false);

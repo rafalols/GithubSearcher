@@ -1,11 +1,18 @@
 package eu.rafalolszewski.githubsearcher.ui.search;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -18,9 +25,13 @@ import eu.rafalolszewski.githubsearcher.dagger.component.SearchActivityComponent
 import eu.rafalolszewski.githubsearcher.dagger.module.SearchActivityModule;
 import eu.rafalolszewski.githubsearcher.model.SearchHistory;
 import eu.rafalolszewski.githubsearcher.ui.base.BaseActivity;
-import rx.Observable;
+import eu.rafalolszewski.githubsearcher.ui.result.ResultActivity;
 
 public class SearchActivity extends BaseActivity implements SearchVP.View{
+
+    private static final String TAG = "SearchActivity";
+
+    public static final String SEARCH_STRING= "searchString";
 
     public SearchActivityComponent component;
 
@@ -28,7 +39,10 @@ public class SearchActivity extends BaseActivity implements SearchVP.View{
     EditText searchText;
 
     @Bind(R.id.list_search_history)
-    ListView historyListView;
+    RecyclerView historyListView;
+
+    @Bind(R.id.button_search)
+    ImageButton searchButton;
 
     @OnClick(R.id.button_search)
     public void search(){
@@ -40,6 +54,9 @@ public class SearchActivity extends BaseActivity implements SearchVP.View{
 
     @Inject
     public SearchVP.Presenter presenter;
+
+    @Inject
+    RecyclerView.ItemAnimator animator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +71,9 @@ public class SearchActivity extends BaseActivity implements SearchVP.View{
 
         component.inject(this);
 
+        historyListView.setLayoutManager(new LinearLayoutManager(this));
         historyListView.setAdapter(historyAdapter);
+        historyListView.setItemAnimator(animator);
     }
 
     private void initComponent(){
@@ -67,19 +86,24 @@ public class SearchActivity extends BaseActivity implements SearchVP.View{
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.onResume();
+        presenter.loadHistory();
     }
 
     @Override
-    public void refreshHistory(Observable<SearchHistory> searchHistory) {
-        historyAdapter.getSearchHistoryList().clear();
-        searchHistory
-                .subscribe(history -> refreshHistoryAdapter(history));
+    public void refreshHistory(List<SearchHistory> searchHistory) {
+        historyAdapter.setHistoryList(searchHistory);
+        historyAdapter.notifyDataSetChanged();
     }
 
-    private void refreshHistoryAdapter(SearchHistory history){
-        historyAdapter.getSearchHistoryList().add(history);
-        historyAdapter.notifyDataSetChanged();
+    @Override
+    public void goToResultActivity(String search) {
+        Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra(SEARCH_STRING, search);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        }else {
+            startActivity(intent);
+        }
     }
 
     private void setOnSearchEnterListener() {

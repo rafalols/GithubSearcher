@@ -1,20 +1,24 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <!-- enable window content transitions -->
+        <item name="android:windowEnterTransition" tools:targetApi="lollipop">@transition/default_transition</item>
+        <item name="android:windowExitTransition" tools:targetApi="lollipop">@transition/default_transition</item>
         <item name="android:windowActivityTransitions" tools:targetApi="lollipop">true</item>
         <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
         <!-- specify shared element transitions -->
         <item name="android:windowSharedElementEnterTransition" tools:targetApi="lollipop">
-            @transition/change_image_transform</item>
+            @transition/default_transition</item>
         <item name="android:windowSharedElementExitTransition" tools:targetApi="lollipop">
-            @transition/change_image_transform</item>
-
+            @transition/default_transition</item>
+        <item name="colorControlNormal">@color/unactiveColorOnDarkBackgroud</item>
+        <item name="colorControlActivated">@color/colorLightAccent</item>
+        <item name="colorControlHighlight">@color/colorLightAccent</item>
     </style>
 
     <style name="label">
@@ -22,7 +26,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/label_margin</item>
-        <item name="android:textColor">@color/label_color</item>
+        <item name="android:textColor">@color/labelColor</item>
     </style>
 
     <style name="value">
@@ -31,7 +35,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">@dimen/value_margin_side</item>
         <item name="android:layout_marginRight">@dimen/value_margin_side</item>
-        <item name="android:textColor">@color/value_color</item>
+        <item name="android:textColor">@color/valueColor</item>
     </style>
 
     <style name="login_value" parent="value">
@@ -49,5 +53,6 @@
         <item name="android:layout_marginTop">@dimen/row_container_margit_top_bottom</item>
         <item name="android:layout_marginBottom">@dimen/row_container_margit_top_bottom</item>
     </style>
+
 
 </resources>

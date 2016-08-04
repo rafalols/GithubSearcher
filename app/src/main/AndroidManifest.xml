@@ -12,22 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.search.SearchActivity">
+        <activity
+            android:name=".ui.search.SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name=".ui.users_list.UserListActivity"
-            android:parentActivityName=".ui.search.SearchActivity"
-            android:launchMode="singleTop"/>
+            android:name=".ui.details.UserDetailsActivity"
+            android:launchMode="singleTop"
+            />
 
         <activity
-            android:name=".ui.details.UserDetailsActivity"
-            android:parentActivityName=".ui.users_list.UserListActivity"
+            android:name=".ui.result.ResultActivity"
             android:launchMode="singleTop"
             />
 

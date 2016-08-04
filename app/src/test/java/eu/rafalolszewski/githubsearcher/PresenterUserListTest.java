@@ -11,7 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import eu.rafalolszewski.githubsearcher.api.GitHubApi;
 import eu.rafalolszewski.githubsearcher.dao.HistoryDao;
 import eu.rafalolszewski.githubsearcher.model.GithubUsersSearch;
-import eu.rafalolszewski.githubsearcher.ui.users_list.UserListActivity;
+import eu.rafalolszewski.githubsearcher.ui.result.ResultActivity;
 import eu.rafalolszewski.githubsearcher.ui.users_list.UserListPresenter;
 import eu.rafalolszewski.githubsearcher.ui.users_list.UserListVP;
 import rx.Observable;
@@ -32,7 +32,7 @@ public class PresenterUserListTest {
     UserListVP.Presenter presenter;
 
     @Mock
-    UserListActivity activity;
+    ResultActivity activity;
 
     @Mock
     UserListVP.View view;
@@ -54,9 +54,8 @@ public class PresenterUserListTest {
     @Before
     public void setup(){
         setupSearch();
-        when(activity.getApi()).thenReturn(gitHubApi);
         when(gitHubApi.searchForUsers(SEARCH_STRING)).thenReturn(Observable.just(userList));
-        presenter = new UserListPresenter(activity, view, historyDao, Schedulers.immediate(), null);
+        presenter = new UserListPresenter(activity, view, historyDao, Schedulers.immediate(), null, gitHubApi);
     }
 
     private void setupSearch() {
@@ -66,11 +65,11 @@ public class PresenterUserListTest {
 
     @Test
     public void getUserListTest(){
-        presenter.getUserList(SEARCH_STRING);
+        presenter.searchForUsers(SEARCH_STRING);
 
         verify(view).setProgressIndicator(true);
         verify(gitHubApi).searchForUsers(SEARCH_STRING);
-        verify(view).onGetUsersList(userList);
+        verify(view).refreshUsers(userList);
         verify(view).setProgressIndicator(false);
     }
 

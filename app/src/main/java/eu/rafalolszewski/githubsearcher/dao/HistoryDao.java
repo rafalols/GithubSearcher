@@ -1,5 +1,7 @@
 package eu.rafalolszewski.githubsearcher.dao;
 
+import java.util.List;
+
 import eu.rafalolszewski.githubsearcher.model.SearchHistory;
 import rx.Observable;
 
@@ -8,8 +10,8 @@ import rx.Observable;
  */
 public interface HistoryDao {
 
-    Observable<SearchHistory> getHistory();
+    Observable<List<SearchHistory>> getHistory();
 
-    void putSearchToHistory(String searchString, int numberOfResults);
+    void putSearchToHistory(String searchString, int numberOfResults, int reposCount);
 
 }

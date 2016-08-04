@@ -23,7 +23,7 @@ import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.dagger.component.DaggerUserDetailsComponent;
 import eu.rafalolszewski.githubsearcher.dagger.component.UserDetailsComponent;
 import eu.rafalolszewski.githubsearcher.dagger.module.UserDetailsModule;
-import eu.rafalolszewski.githubsearcher.model.GithubUser;
+import eu.rafalolszewski.githubsearcher.model.UserDetails;
 import eu.rafalolszewski.githubsearcher.ui.base.BaseActivity;
 
 public class UserDetailsActivity extends BaseActivity implements UserDetailsVP.View{
@@ -133,7 +133,7 @@ public class UserDetailsActivity extends BaseActivity implements UserDetailsVP.V
     }
 
     @Override
-    public void onGetUser(GithubUser user) {
+    public void onGetUser(UserDetails user) {
 
         Picasso.with(this).load(user.avatarUrl).into(avatar, new Callback() {
             @Override

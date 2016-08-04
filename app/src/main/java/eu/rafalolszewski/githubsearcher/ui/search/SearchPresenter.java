@@ -1,12 +1,10 @@
 package eu.rafalolszewski.githubsearcher.ui.search;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import eu.rafalolszewski.githubsearcher.R;
 import eu.rafalolszewski.githubsearcher.dao.HistoryDao;
-import eu.rafalolszewski.githubsearcher.ui.users_list.UserListActivity;
 
 /**
  * Created by rafal on 02.05.16.
@@ -30,25 +28,21 @@ public class SearchPresenter implements SearchVP.Presenter {
         }else if (activity.getApi() == null){
             Toast.makeText(activity, activity.getString(R.string.wait_for_api), Toast.LENGTH_LONG).show();
         }else {
-            Intent intent = new Intent(activity, UserListActivity.class);
-            intent.putExtra(SEARCH_STRING, searchString);
-            activity.startActivity(intent);
+            activity.goToResultActivity(searchString);
         }
     }
 
     @Override
-    public void onResume() {
-        refreshHistory();
+    public void loadHistory() {
+        historyDao.getHistory()
+                .subscribe(history -> searchView.refreshHistory(history));
     }
 
     @Override
     public void onRestoreInstance(Bundle savedInstanceState) {
-        refreshHistory();
+        loadHistory();
     }
 
-    private void refreshHistory() {
-        searchView.refreshHistory(historyDao.getHistory());
-    }
 
     @Override
     public void onSaveInstance(Bundle bundle) {

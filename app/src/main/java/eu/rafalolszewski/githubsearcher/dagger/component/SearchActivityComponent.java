@@ -1,5 +1,7 @@
 package eu.rafalolszewski.githubsearcher.dagger.component;
 
+import android.support.v7.widget.RecyclerView;
+
 import dagger.Component;
 import eu.rafalolszewski.githubsearcher.dagger.module.SearchActivityModule;
 import eu.rafalolszewski.githubsearcher.dagger.scope.PerSearchActivity;
@@ -17,6 +19,8 @@ public interface SearchActivityComponent {
     SearchVP.Presenter searchPresenter();
 
     HistoryAdapter historyAdapter();
+
+    RecyclerView.ItemAnimator itemAnimator();
 
     void inject(SearchActivity searchActivity);
 

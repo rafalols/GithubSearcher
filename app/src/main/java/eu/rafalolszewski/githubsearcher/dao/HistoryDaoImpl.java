@@ -1,9 +1,12 @@
 package eu.rafalolszewski.githubsearcher.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import eu.rafalolszewski.githubsearcher.model.SearchHistory;
 import io.realm.Realm;
+import io.realm.RealmResults;
 import io.realm.Sort;
 import rx.Observable;
 
@@ -13,7 +16,7 @@ import rx.Observable;
 public class HistoryDaoImpl implements HistoryDao {
 
     private static final String ORDERBY_FIELD = "searchDate";
-    private static final int HISTORY_SIZE = 10;
+    private static final int HISTORY_SIZE = 500;
 
     private Realm realm;
 
@@ -22,19 +25,25 @@ public class HistoryDaoImpl implements HistoryDao {
     }
 
     @Override
-    public Observable<SearchHistory> getHistory() {
+    public Observable< List<SearchHistory>> getHistory() {
         return realm.where(SearchHistory.class).findAllSorted(ORDERBY_FIELD, Sort.DESCENDING)
                 .asObservable()
-                .flatMap(histories -> Observable.from(histories))
-                .take(HISTORY_SIZE);
+                .flatMap(history -> historyToList(history));
+    }
+
+    private Observable< List<SearchHistory>> historyToList(RealmResults<SearchHistory> histories) {
+        List<SearchHistory> list = new ArrayList<>();
+        list.addAll(histories);
+        return Observable.just(list);
     }
 
     @Override
-    public void putSearchToHistory(String searchString, int numberOfResults) {
+    public void putSearchToHistory(String searchString, int usersCount, int reposCount) {
         SearchHistory search = new SearchHistory();
         search.setSearchString(searchString);
         search.setSearchDate(getCurrentDate());
-        search.setNumberOfResults(numberOfResults);
+        search.setNumberOfUsers(usersCount);
+        search.setNumberOfRepos(reposCount);
         copyOrUpdateToRealm(search);
     }
 
